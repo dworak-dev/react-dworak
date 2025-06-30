@@ -1,4 +1,4 @@
-import { config } from "@repo/eslint-config/react";
+import { config } from "./eslint-config-base.js";
 
 /** @type {import("eslint").Linter.Config} */
 export default config;

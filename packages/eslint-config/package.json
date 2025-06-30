@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
   "exports": {
-    "./base": "./base.js",
-    "./next-js": "./next.js",
-    "./react-internal": "./react-internal.js"
+    "./base": "./eslint-config-base.js",
+    "./next-js": "./eslint-config-next.js",
+    "./react": "./eslint-config-react.js"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
