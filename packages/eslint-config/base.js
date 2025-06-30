@@ -3,6 +3,8 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
 import onlyWarn from "eslint-plugin-only-warn";
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -16,9 +18,12 @@ export const config = [
   {
     plugins: {
       turbo: turboPlugin,
+        "simple-import-sort": simpleImportSort,
     },
     rules: {
       "turbo/no-undeclared-env-vars": "warn",
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
     },
   },
   {
@@ -29,4 +34,5 @@ export const config = [
   {
     ignores: ["dist/**"],
   },
+    eslintPluginPrettierRecommended,
 ];
