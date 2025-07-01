@@ -38,6 +38,7 @@ const resetNextJsProjectAssetsFolder = async (projectPath: string) => {
     await Promise.all(
       files.map((file) => fs.unlink(path.join(assetsDir, file))),
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     // If the directory doesn't exist, create it
     if (err.code === "ENOENT") {
