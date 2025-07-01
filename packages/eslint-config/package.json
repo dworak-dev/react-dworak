@@ -1,16 +1,15 @@
 {
   "name": "@repo/eslint-config",
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --fix"
-  },
   "exports": {
     "./base": "./eslint-config-base.js",
     "./next-js": "./eslint-config-next.js",
     "./react": "./eslint-config-react.js"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
@@ -27,5 +26,6 @@
     "prettier": "^3.6.2",
     "typescript": "5.8.2",
     "typescript-eslint": "^8.34.0"
-  }
+  },
+  "type": "module"
 }
