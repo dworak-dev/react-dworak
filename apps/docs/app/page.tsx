@@ -1,3 +1,4 @@
+import { assets } from "@repo/next-js-assets";
 import { Button } from "@repo/ui/button";
 import Image, { type ImageProps } from "next/image";
 
@@ -26,7 +27,7 @@ export default function Home() {
         <ThemeImage
           className={styles.logo}
           srcLight="turborepo-dark.svg"
-          srcDark="turborepo-light.svg"
+          srcDark={assets.NEXT_JS}
           alt="Turborepo logo"
           width={180}
           height={38}

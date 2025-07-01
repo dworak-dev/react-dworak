@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    ".": "./src/assets.ts"
+    ".": "./src/assets-autogen.ts"
   },
   "scripts": {
     "build": "esbuild src/index.ts --bundle --minify --sourcemap --platform=node --outfile=dist/index.js --format=cjs",
@@ -18,9 +18,7 @@
     "@types/node": "^22.15.3",
     "esbuild": "^0.20.0",
     "eslint": "^9.29.0",
-    "typescript": "5.8.2"
-  },
-  "dependencies": {
+    "typescript": "5.8.2",
     "pino": "^9.7.0",
     "pino-pretty": "^13.0.0"
   }
