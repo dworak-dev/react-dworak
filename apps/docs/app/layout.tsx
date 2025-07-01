@@ -3,13 +3,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
+const renogareRegularFont = localFont({
+  src: "../public/fonts/Renogare-Regular.otf",
+  variable: "--font-renogare-regular",
 });
 
 export const metadata: Metadata = {
@@ -24,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-      </body>
+      <body className={renogareRegularFont.className}>{children}</body>
     </html>
   );
 }
