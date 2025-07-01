@@ -1,0 +1,10 @@
+query GetAllVehicles($first: Int) {
+    allVehicles(first: $first) {
+        totalCount
+        vehicles {
+            id
+            name
+            model
+        }
+    }
+}

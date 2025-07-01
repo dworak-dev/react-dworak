@@ -1,0 +1,8 @@
+schema: ./autogen/schema.graphql
+documents: '**/*.graphql'
+extensions:
+  endpoints:
+    default:
+      url: https://swapi-graphql.netlify.app/graphql
+      headers:
+        Authorization
