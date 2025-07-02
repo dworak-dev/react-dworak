@@ -1,7 +1,7 @@
-import "@repo/ui/globals.css";
+import "@workspace/ui/globals.css";
 import "./globals.css";
 
-import { cn } from "@repo/ui/lib/utils";
+import { cn } from "@workspace/ui/lib/utils";
 import type { Metadata } from "next";
 
 import { fontVariables } from "@/app/fonts";

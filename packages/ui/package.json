@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ui",
+  "name": "@workspace/ui",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -22,8 +22,8 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@workspace/eslint-config": "*",
+    "@workspace/typescript-config": "*",
     "@turbo/gen": "^2.5.0",
     "@types/node": "^22.15.3",
     "@types/react": "19.1.0",
