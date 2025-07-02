@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/next-js-assets",
+  "name": "@packages/next-js-assets",
   "version": "1.0.0",
   "private": true,
   "exports": {
@@ -13,8 +13,8 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@workspace/eslint-config": "*",
-    "@workspace/typescript-config": "*",
+    "@packages/eslint-config": "*",
+    "@packages/typescript-config": "*",
     "@types/node": "^22.15.3",
     "esbuild": "^0.20.0",
     "eslint": "^9.29.0",

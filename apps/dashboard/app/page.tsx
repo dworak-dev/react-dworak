@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@workspace/ui/components/button";
+import { Button } from "@packages/ui/components/button";
 import {
   Card,
   CardAction,
@@ -8,15 +8,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/components/card";
+} from "@packages/ui/components/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import { Input } from "@workspace/ui/components/input";
-import { Label } from "@workspace/ui/components/label";
+} from "@packages/ui/components/dropdown-menu";
+import { Input } from "@packages/ui/components/input";
+import { Label } from "@packages/ui/components/label";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 

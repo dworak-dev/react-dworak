@@ -1,8 +1,8 @@
 # TODO
 - [ ] Release Please
 - [ ] Github Actions for release and pull requests
-- [ ] Renaming @repo
+- [X] Renaming @repo
 - [ ] Add assets project to the monorepo
-- [ ] Fix eslint configuration to add prettier and others
-- [ ] Rename existing apps
+- [X] Fix eslint configuration to add prettier and others
+- [X] Rename existing apps
 - [ ] Modify README

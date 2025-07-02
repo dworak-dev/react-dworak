@@ -8,7 +8,7 @@ export const NEXT_JS_ASSETS_FOLDER = "assets";
 
 export const SOURCE_ASSETS_DIR = "public";
 
-export const NEXT_JS_APPS = ["apps/docs"];
+export const NEXT_JS_APPS = ["apps/dashboard"];
 
 const nextJsProjectsPaths = NEXT_JS_APPS.map((app) =>
   path.resolve(__dirname, "../../..", app),
