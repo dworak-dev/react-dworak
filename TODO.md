@@ -6,3 +6,5 @@
 - [X] Fix eslint configuration to add prettier and others
 - [X] Rename existing apps
 - [ ] Modify README
+- [ ] Config project
+- [ ] Add docker support

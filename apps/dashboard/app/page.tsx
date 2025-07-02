@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@packages/ui/components/button";
 import {
   Card,
@@ -20,26 +21,12 @@ import { Label } from "@packages/ui/components/label";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
-export default function Home() {
+export default () => {
   const { setTheme } = useTheme();
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          top: "1rem",
-          right: "1rem",
-          zIndex: 10,
-        }}
-      >
+    <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <div className="absolute top-4 right-4 z-10">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
@@ -61,7 +48,7 @@ export default function Home() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm rounded-md shadow-md">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
@@ -109,4 +96,4 @@ export default function Home() {
       </Card>
     </div>
   );
-}
+};

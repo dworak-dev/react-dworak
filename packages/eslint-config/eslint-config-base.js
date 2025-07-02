@@ -5,6 +5,8 @@ import eslintSimpleImportSortPlugin from "eslint-plugin-simple-import-sort";
 import eslintTurboPlugin from "eslint-plugin-turbo";
 import typescriptEslint from "typescript-eslint";
 
+import { customRulesPlugin } from "./rules/index.js";
+
 /**
  * A shared ESLint configuration for the repository.
  *
@@ -30,6 +32,15 @@ export const config = [
     rules: {
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
+    },
+  },
+  // Custom rules plugin for project-specific rules
+  {
+    plugins: {
+      "custom-rules": customRulesPlugin,
+    },
+    rules: {
+      "custom-rules/dash-case-filename": "error",
     },
   },
   // Only warn plugins because all rules are equally important
