@@ -10,15 +10,19 @@
     "lint:fix": "turbo run lint:fix",
     "check-types": "turbo run check-types",
     "docker:dashboard:build": "docker build -t dashboard -f apps/dashboard/Dockerfile .",
-    "docker:dashboard:run": "docker run --name my-dashboard --rm -p 3000:3000 dashboard"
+    "docker:dashboard:run": "docker run --name my-dashboard --rm -p 3000:3000 dashboard",
+    "depcheck": "depcheck --ignores='typescript,prettier'",
+    "syncpack": "syncpack list-mismatches"
   },
   "devDependencies": {
-    "prettier": "^3.6.0",
+    "depcheck": "^1.4.7",
+    "prettier": "3.6.2",
+    "syncpack": "^13.0.4",
     "turbo": "^2.5.4",
-    "typescript": "5.8.2"
+    "typescript": "5.8.3"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "packageManager": "yarn@1.22.22",
   "workspaces": [
