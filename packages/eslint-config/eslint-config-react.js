@@ -2,14 +2,11 @@ import eslintReactPlugin from "eslint-plugin-react";
 import eslintReactHooksPlugin from "eslint-plugin-react-hooks";
 import globals from "globals";
 
-import { config as baseConfig } from "./eslint-config-base.js";
+import { eslintBaseConfig } from "./eslint-config-base.js";
 
-/**
- * A custom ESLint configuration for libraries that use React.
- *
- * @type {import("eslint").Linter.Config[]} */
-export const config = [
-  ...baseConfig,
+/** @type {import("eslint").Linter.Config[]} */
+export const eslintReactConfig = [
+  ...eslintBaseConfig,
   eslintReactPlugin.configs.flat.recommended,
   {
     languageOptions: {
@@ -27,7 +24,7 @@ export const config = [
     settings: { react: { version: "detect" } },
     rules: {
       ...eslintReactHooksPlugin.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
+      // React scope no longer necessary with the new JSX transform.
       "react/react-in-jsx-scope": "off",
     },
   },

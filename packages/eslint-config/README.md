@@ -30,9 +30,9 @@ For basic JavaScript/TypeScript projects:
 
 ```js
 // eslint.config.mjs
-import { config } from "@packages/eslint-config/base";
+import {eslintBaseConfig} from "@packages/eslint-config/base";
 
-export default config;
+export default eslintBaseConfig;
 ```
 
 ### React Configuration
@@ -41,9 +41,9 @@ For React libraries and components:
 
 ```js
 // eslint.config.mjs
-import { config } from "@packages/eslint-config/react";
+import {eslintReactConfig} from "@packages/eslint-config/react";
 
-export default config;
+export default eslintReactConfig;
 ```
 
 ### Next.js Configuration
@@ -52,9 +52,9 @@ For Next.js applications:
 
 ```js
 // eslint.config.mjs
-import { nextJsConfig } from "@packages/eslint-config/next-js";
+import {eslintNextJsConfig} from "@packages/eslint-config/next-js";
 
-export default nextJsConfig;
+export default eslintNextJsConfig;
 ```
 
 ## Features
@@ -93,15 +93,15 @@ You can extend any of the provided configurations:
 
 ```js
 // eslint.config.mjs
-import { config as baseConfig } from "@packages/eslint-config/base";
+import {eslintBaseConfig as baseConfig} from "@packages/eslint-config/base";
 
 export default [
-  ...baseConfig,
-  {
-    // Your custom rules here
-    rules: {
-      "no-console": "warn"
+    ...baseConfig,
+    {
+        // Your custom rules here
+        rules: {
+            "no-console": "warn"
+        }
     }
-  }
 ];
 ```

@@ -1,9 +1,7 @@
-/**
- * Custom ESLint rules for the project
- */
 import { anonymousExportDefaultRule } from "./anonymous-export-default.js";
 import { dashCaseFilenameRule } from "./dash-case-filename.js";
 
+/** @type {import("eslint").ESLint.Plugin} */
 export const customRulesPlugin = {
   meta: {
     name: "custom-rules",

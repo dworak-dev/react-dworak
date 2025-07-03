@@ -1,6 +1,4 @@
-/**
- * Rule to enforce anonymous export defaults for Next.js pages and layouts
- */
+/** @type {import("eslint").Rule.RuleModule} */
 export const anonymousExportDefaultRule = {
   meta: {
     type: "problem",

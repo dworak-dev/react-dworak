@@ -7,12 +7,8 @@ import typescriptEslint from "typescript-eslint";
 
 import { customRulesPlugin } from "./rules/index.js";
 
-/**
- * A shared ESLint configuration for the repository.
- *
- * @type {import("eslint").Linter.Config[]}
- * */
-export const config = [
+/** @type {import("eslint").Linter.Config[]} */
+export const eslintBaseConfig = [
   js.configs.recommended,
   ...typescriptEslint.configs.recommended,
   // Turbo plugin for monorepo management
@@ -38,9 +34,6 @@ export const config = [
   {
     plugins: {
       "custom-rules": customRulesPlugin,
-    },
-    rules: {
-      "custom-rules/dash-case-filename": "error",
     },
   },
   // Only warn plugins because all rules are equally important

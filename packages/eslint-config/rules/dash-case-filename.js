@@ -1,6 +1,4 @@
-/**
- * Rule to enforce dash-case naming for files in ui/src/components
- */
+/** @type {import("eslint").Rule.RuleModule} */
 export const dashCaseFilenameRule = {
   meta: {
     type: "problem",

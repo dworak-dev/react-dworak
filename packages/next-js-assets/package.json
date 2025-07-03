@@ -21,5 +21,6 @@
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "sync": "node dist/index.js | pino-pretty"
-  }
+  },
+  "type": "module"
 }

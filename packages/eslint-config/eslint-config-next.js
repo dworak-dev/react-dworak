@@ -3,15 +3,11 @@ import eslintReactPlugin from "eslint-plugin-react";
 import eslintReactHooksPlugin from "eslint-plugin-react-hooks";
 import globals from "globals";
 
-import { config as baseConfig } from "./eslint-config-base.js";
+import { eslintBaseConfig } from "./eslint-config-base.js";
 
-/**
- * A custom ESLint configuration for apps that use Next.js.
- *
- * @type {import("eslint").Linter.Config[]}
- * */
-export const nextJsConfig = [
-  ...baseConfig,
+/** @type {import("eslint").Linter.Config[]} */
+export const eslintNextJsConfig = [
+  ...eslintBaseConfig,
   // Basic React configuration
   {
     ...eslintReactPlugin.configs.flat.recommended,
