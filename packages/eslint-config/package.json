@@ -1,16 +1,6 @@
 {
   "name": "@packages/eslint-config",
   "version": "1.0.0",
-  "private": true,
-  "exports": {
-    "./base": "./eslint-config-base.js",
-    "./next-js": "./eslint-config-next.js",
-    "./react": "./eslint-config-react.js"
-  },
-  "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --fix"
-  },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@next/eslint-plugin-next": "^15.3.0",
@@ -26,6 +16,16 @@
     "prettier": "3.6.2",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.34.0"
+  },
+  "exports": {
+    "./base": "./eslint-config-base.js",
+    "./next-js": "./eslint-config-next.js",
+    "./react": "./eslint-config-react.js"
+  },
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module"
 }

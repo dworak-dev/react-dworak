@@ -1,19 +1,6 @@
 {
   "name": "react-dworak",
   "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "sync": "turbo run sync",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "lint:fix": "turbo run lint:fix",
-    "check-types": "turbo run check-types",
-    "docker:dashboard:build": "docker build -t dashboard -f apps/dashboard/Dockerfile .",
-    "docker:dashboard:run": "docker run --name my-dashboard --rm -p 3000:3000 dashboard",
-    "depcheck": "depcheck --ignores='typescript,prettier'",
-    "syncpack": "syncpack list-mismatches"
-  },
   "devDependencies": {
     "depcheck": "^1.4.7",
     "prettier": "3.6.2",
@@ -25,6 +12,20 @@
     "node": ">=22"
   },
   "packageManager": "yarn@1.22.22",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "check-types": "turbo run check-types",
+    "depcheck": "depcheck --ignores='typescript,prettier'",
+    "dev": "turbo run dev",
+    "docker:dashboard:build": "docker build -t dashboard -f apps/dashboard/Dockerfile .",
+    "docker:dashboard:run": "docker run --name my-dashboard --rm -p 3000:3000 dashboard",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "sync": "turbo run sync",
+    "syncpack:format": "syncpack format",
+    "syncpack:mismatch": "syncpack list-mismatches --types prod"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
