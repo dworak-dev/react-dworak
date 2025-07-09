@@ -8,3 +8,4 @@
 - [ ] Modify README
 - [ ] Config project
 - [ ] Add docker support
+- [ ] Modules thing (esm, csj etc) and tsconfig configuration is weird. Check it.

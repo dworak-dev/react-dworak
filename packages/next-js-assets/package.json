@@ -20,7 +20,7 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "sync": "node dist/index.js | pino-pretty"
+    "sync": "node dist/index.cjs | pino-pretty"
   },
   "type": "module"
 }
