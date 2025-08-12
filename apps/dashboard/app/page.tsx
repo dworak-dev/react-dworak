@@ -1,5 +1,6 @@
 "use client";
 
+import { ExampleImage } from "@packages/assets";
 import { Button } from "@packages/ui/components/button";
 import {
   Card,
@@ -19,6 +20,7 @@ import {
 import { Input } from "@packages/ui/components/input";
 import { Label } from "@packages/ui/components/label";
 import { Moon, Sun } from "lucide-react";
+import Image from "next/image";
 import { useTheme } from "next-themes";
 
 export default () => {
@@ -26,6 +28,16 @@ export default () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <Image width={100} height={100} src={ExampleImage} alt="popo"></Image>
+      <div
+        style={{
+          width: 100,
+          height: 100,
+          backgroundImage: `url(${ExampleImage.src})`,
+        }}
+        className="imageContainerExample"
+      ></div>
+
       <div className="absolute top-4 right-4 z-10">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -35,6 +47,7 @@ export default () => {
               <span className="sr-only">Toggle theme</span>
             </Button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setTheme("light")}>
               Light

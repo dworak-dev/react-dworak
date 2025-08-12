@@ -7,7 +7,7 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@packages/eslint-config": "*",
+    "@packages/eslint": "*",
     "@packages/typescript-config": "*",
     "@turbo/gen": "^2.5.0",
     "@types/node": "^22.15.3",
