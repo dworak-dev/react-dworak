@@ -1,1 +1,1 @@
-export { default as ExampleImage } from './example.svg'
+export { default as ExampleImage } from './src/example.svg'
