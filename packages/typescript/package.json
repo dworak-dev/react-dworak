@@ -1,0 +1,10 @@
+{
+  "name": "@packages/typescript",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    "./base": "./typescript-config-base.json",
+    "./next": "./typescript-config-next.json",
+    "./react": "./typescript-config-react.json"
+  }
+}
