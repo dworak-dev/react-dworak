@@ -19,12 +19,13 @@
     "typescript-eslint": "^8.34.0"
   },
   "exports": {
-    "./base": "./eslint-config-base.js",
-    "./next": "./eslint-config-next.js",
-    "./react": "./eslint-config-react.js"
+    "./base": "./src/base.js",
+    "./next": "./src/next.js",
+    "./react": "./src/react.js"
   },
   "private": true,
   "scripts": {
+    "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix"
   },

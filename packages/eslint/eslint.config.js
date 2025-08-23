@@ -1,3 +1,3 @@
-import { eslintBaseConfig } from "./eslint-config-base.js";
+import { eslintBaseConfig } from "./src/base.js";
 
 export default eslintBaseConfig;

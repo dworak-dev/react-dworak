@@ -1,10 +1,9 @@
 {
-  "name": "@packages/typescript",
+  "name": "@packages/config",
   "version": "1.0.0",
   "exports": {
-    "./base": "./src/base.json",
-    "./next": "./src/next.json",
-    "./react": "./src/react.json"
+    "./envVars": "./src/envVars.ts",
+    "./dashboardRouteConfigs": "./src/routes/dashboardRouteConfigs.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit",
@@ -14,6 +13,6 @@
   "devDependencies": {
     "@packages/eslint": "*"
   },
-  "private": true,
-  "type": "module"
+  "type": "module",
+  "private": true
 }

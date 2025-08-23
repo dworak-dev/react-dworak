@@ -1,7 +1,7 @@
 import next from "@next/eslint-plugin-next";
 import typescript from "typescript-eslint";
 
-import { eslintReactConfig } from "./eslint-config-react.js";
+import { eslintReactConfig } from "./react.js";
 
 export const eslintNextConfig = typescript.config(
   eslintReactConfig,

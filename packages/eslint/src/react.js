@@ -3,7 +3,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 import typescript from "typescript-eslint";
 
-import { eslintBaseConfig } from "./eslint-config-base.js";
+import { eslintBaseConfig } from "./base.js";
 
 export const eslintReactConfig = typescript.config(
   eslintBaseConfig,

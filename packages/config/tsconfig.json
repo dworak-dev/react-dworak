@@ -1,0 +1,18 @@
+{
+  "extends": "@packages/typescript/base",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@packages/config/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

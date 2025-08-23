@@ -35,7 +35,6 @@ export default () => {
           height: 100,
           backgroundImage: `url(${ExampleImage.src})`,
         }}
-        className="imageContainerExample"
       ></div>
 
       <div className="absolute top-4 right-4 z-10">

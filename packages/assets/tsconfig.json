@@ -1,13 +1,16 @@
 {
-  "extends": "@packages/typescript/react",
+  "extends": "@packages/typescript/base",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@packages/ui/*": [
+      "@packages/assets/*": [
         "./src/*"
       ]
     }
   },
+  "files": [
+    "./src/globals.d.ts"
+  ],
   "include": [
     "src"
   ],

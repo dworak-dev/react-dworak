@@ -1,5 +1,14 @@
 {
   "name": "@packages/assets",
   "version": "1.0.0",
-  "main": "index.ts"
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "private": "true",
+  "type": "module"
 }
