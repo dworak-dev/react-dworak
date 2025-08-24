@@ -1,18 +1,18 @@
 {
   "name": "@packages/config",
   "version": "1.0.0",
+  "devDependencies": {
+    "@packages/eslint": "*"
+  },
   "exports": {
     "./envVars": "./src/envVars.ts",
     "./dashboardRouteConfigs": "./src/routes/dashboardRouteConfigs.ts"
   },
+  "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix"
   },
-  "devDependencies": {
-    "@packages/eslint": "*"
-  },
-  "type": "module",
-  "private": true
+  "type": "module"
 }

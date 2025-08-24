@@ -1,19 +1,18 @@
 {
   "name": "@packages/typescript",
   "version": "1.0.0",
+  "devDependencies": {
+    "@packages/eslint": "*"
+  },
   "exports": {
     "./base": "./src/base.json",
     "./next": "./src/next.json",
     "./react": "./src/react.json"
   },
+  "private": true,
   "scripts": {
-    "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix"
   },
-  "devDependencies": {
-    "@packages/eslint": "*"
-  },
-  "private": true,
   "type": "module"
 }
