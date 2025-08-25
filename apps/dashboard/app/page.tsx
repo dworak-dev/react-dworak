@@ -1,6 +1,6 @@
 "use client";
 
-import { ExampleImage } from "@packages/assets";
+import { BlueCircle, RedCircle } from "@packages/assets";
 import { Button } from "@packages/ui/components/button";
 import {
   Card,
@@ -35,12 +35,12 @@ export default () => {
       >
         Sentry.js Test Error
       </Button>
-      <Image width={100} height={100} src={ExampleImage} alt="popo"></Image>
+      <Image width={100} height={100} src={BlueCircle} alt="popo"></Image>
       <div
         style={{
           width: 100,
           height: 100,
-          backgroundImage: `url(${ExampleImage.src})`,
+          backgroundImage: `url(${RedCircle.src})`,
         }}
       ></div>
 

@@ -1,14 +1,17 @@
 {
   "name": "@packages/graphql",
   "version": "1.0.0",
+  "dependencies": {
+    "graphql-request": "^7.2.0"
+  },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.7",
     "@graphql-codegen/client-preset": "4.8.3",
     "@graphql-codegen/introspection": "4.0.3",
-    "graphql": "^16.11.0",
-    "typescript": "5.8.3",
     "@packages/eslint": "*",
-    "@packages/typescript": "*"
+    "@packages/typescript": "*",
+    "graphql": "^16.11.0",
+    "typescript": "5.8.3"
   },
   "exports": {
     ".": "./autogen/graphql.ts",
@@ -17,13 +20,10 @@
   },
   "private": true,
   "scripts": {
-    "sync": "graphql-codegen --config src/codegen.ts",
     "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "lint:fix": "eslint . --fix"
-  },
-  "dependencies": {
-    "graphql-request": "^7.2.0"
+    "lint:fix": "eslint . --fix",
+    "sync": "graphql-codegen --config src/codegen.ts"
   },
   "type": "module"
 }

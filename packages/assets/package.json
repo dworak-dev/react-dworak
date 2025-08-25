@@ -1,12 +1,12 @@
 {
   "name": "@packages/assets",
   "version": "1.0.0",
-  "exports": {
-    ".": "./src/index.ts"
-  },
   "devDependencies": {
     "@packages/eslint": "*",
     "@packages/typescript": "*"
+  },
+  "exports": {
+    ".": "./src/index.ts"
   },
   "private": "true",
   "scripts": {
