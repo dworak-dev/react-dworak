@@ -1,5 +1,5 @@
-import { envVars } from "@packages/common/envVars";
-import { dashboardRouteConfigs } from "@packages/common/routes/dashboard";
+import { envVars } from "@packages/shared/envVars";
+import { dashboardRouteConfigs } from "@packages/shared/routes";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";
 

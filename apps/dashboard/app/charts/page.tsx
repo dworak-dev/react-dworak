@@ -1,4 +1,4 @@
-import { dashboardStatsRouteConfig } from "@packages/common/routes/dashboard";
+import { dashboardStatsRouteConfig } from "@packages/shared/routes";
 
 export default () => (
   <div>

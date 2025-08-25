@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@packages/assets": "*",
-    "@packages/common": "*",
+    "@packages/shared": "*",
     "@packages/graphql": "*",
     "@packages/ui": "*",
     "@radix-ui/react-dropdown-menu": "^2.1.15",

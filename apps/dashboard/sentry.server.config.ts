@@ -2,7 +2,7 @@
 // The config you add here will be used whenever the server handles a request.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import { envVars } from "@packages/common/envVars";
+import { envVars } from "@packages/shared/envVars";
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({

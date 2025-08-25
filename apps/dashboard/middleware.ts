@@ -1,4 +1,4 @@
-import { dashboardRouteConfigs } from "@packages/common/routes/dashboard";
+import { dashboardRouteConfigs } from "@packages/shared/routes";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 

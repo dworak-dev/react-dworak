@@ -1,5 +1,5 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import { envVars } from "@packages/common/envVars";
+import { envVars } from "@packages/shared/envVars";
 
 const config: CodegenConfig = {
   overwrite: true,

@@ -1,5 +1,5 @@
 {
-  "name": "@packages/common",
+  "name": "@packages/shared",
   "version": "1.0.0",
   "devDependencies": {
     "@packages/eslint": "*",
@@ -7,7 +7,7 @@
   },
   "exports": {
     "./envVars": "./src/envVars.ts",
-    "./routes/dashboard": "./src/routes/dashboard.ts"
+    "./routes": "./src/routes/index.ts"
   },
   "private": true,
   "scripts": {
