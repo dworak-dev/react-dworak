@@ -1,3 +1,13 @@
+// TODO: verify and/or rewrite this file because it was written entirely with AI.
+// (even if it seems to work fine)
+
+/*
+ * This rule is highly opinionated.
+ * This rule is meant to enforce dash-case naming for files in ui/src/components folder.
+ * Keep in mind this rule was completely written with AI.
+ * dworak.dev
+ */
+
 /** @type {import("eslint").Rule.RuleModule} */
 export const dashCaseFilenameRule = {
   meta: {

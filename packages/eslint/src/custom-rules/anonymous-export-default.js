@@ -1,3 +1,14 @@
+// TODO: verify and/or rewrite this file because it was written entirely with AI.
+// (even if it seems to work fine)
+
+/*
+ * This rule is highly opinionated.
+ * There is no need for pages, layouts or other next.js spcial files to have a named export.
+ * This ruled is meant to enforce anonymous export defaults on such files.
+ * Keep in mind this rule was completely written with AI.
+ * dworak.dev
+ */
+
 /** @type {import("eslint").Rule.RuleModule} */
 export const anonymousExportDefaultRule = {
   meta: {
