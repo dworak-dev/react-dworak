@@ -1,0 +1,19 @@
+{
+  "name": "@packages/shared",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@packages/eslint": "*",
+    "@packages/typescript": "*"
+  },
+  "exports": {
+    "./envVars": "./src/envVars.ts",
+    "./routes": "./src/routes/index.ts"
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "type": "module"
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "@packages/typescript/base",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@packages/assets/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "files": [
+    "./src/globals.d.ts"
+  ],
+  "include": [
+    "src"
+  ],
+}
