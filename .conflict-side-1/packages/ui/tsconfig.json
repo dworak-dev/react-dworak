@@ -1,0 +1,14 @@
+{
+  "extends": "@packages/typescript/react",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@packages/ui/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+}

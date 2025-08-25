@@ -1,0 +1,10 @@
+fragment LandpadItem on Landpad {
+    id
+    full_name
+}
+
+query GetLandpadsCatalog($limit: Int) {
+    landpads(limit: $limit) {
+      ...LandpadItem
+    }
+}
