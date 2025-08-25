@@ -14,10 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "query GetAllVehicles($first: Int) {\n  allVehicles(first: $first) {\n    totalCount\n    vehicles {\n      id\n      name\n      model\n    }\n  }\n}": typeof types.GetAllVehiclesDocument,
+    "fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}": typeof types.LandpadItemFragmentDoc,
 };
 const documents: Documents = {
-    "query GetAllVehicles($first: Int) {\n  allVehicles(first: $first) {\n    totalCount\n    vehicles {\n      id\n      name\n      model\n    }\n  }\n}": types.GetAllVehiclesDocument,
+    "fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}": types.LandpadItemFragmentDoc,
 };
 
 /**
@@ -37,7 +37,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetAllVehicles($first: Int) {\n  allVehicles(first: $first) {\n    totalCount\n    vehicles {\n      id\n      name\n      model\n    }\n  }\n}"): (typeof documents)["query GetAllVehicles($first: Int) {\n  allVehicles(first: $first) {\n    totalCount\n    vehicles {\n      id\n      name\n      model\n    }\n  }\n}"];
+export function graphql(source: "fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}"): (typeof documents)["fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

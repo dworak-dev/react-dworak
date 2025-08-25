@@ -1,4 +1,5 @@
-import { dashboardRouteConfigs } from "@packages/config/dashboardRouteConfigs";
+import { envVars } from "@packages/common/envVars";
+import { dashboardRouteConfigs } from "@packages/common/routes/dashboard";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";
 
@@ -21,13 +22,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+const withSentryNextConfig = withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: "dworak-z3",
+  org: envVars.SENTRY_JS_ORG,
 
-  project: "javascript-nextjs",
+  project: envVars.SENTRY_JS_PROJECT,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -42,7 +43,7 @@ export default withSentryConfig(nextConfig, {
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: true,
+  tunnelRoute: `/${envVars.SENTRY_JS_METRICS_PATH}`,
 
   // This token is used to upload source maps to Sentry.
   authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -56,3 +57,8 @@ export default withSentryConfig(nextConfig, {
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
 });
+
+// Only return sentry config in production builds
+export default process.env.NODE_ENV === "production"
+  ? withSentryNextConfig
+  : nextConfig;

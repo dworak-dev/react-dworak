@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@packages/config/*": [
+      "@packages/common/*": [
         "./src/*"
       ]
     }

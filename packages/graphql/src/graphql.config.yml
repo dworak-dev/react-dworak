@@ -3,6 +3,6 @@ documents: '**/*.graphql'
 extensions:
   endpoints:
     default:
-      url: https://swapi-graphql.netlify.app/graphql
+      url: https://spacex-production.up.railway.app/graphql
       headers:
         Authorization

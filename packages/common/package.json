@@ -1,12 +1,13 @@
 {
-  "name": "@packages/config",
+  "name": "@packages/common",
   "version": "1.0.0",
   "devDependencies": {
-    "@packages/eslint": "*"
+    "@packages/eslint": "*",
+    "@packages/typescript": "*"
   },
   "exports": {
     "./envVars": "./src/envVars.ts",
-    "./dashboardRouteConfigs": "./src/routes/dashboardRouteConfigs.ts"
+    "./routes/dashboard": "./src/routes/dashboard.ts"
   },
   "private": true,
   "scripts": {

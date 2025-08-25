@@ -1,10 +1,10 @@
-query GetAllVehicles($first: Int) {
-    allVehicles(first: $first) {
-        totalCount
-        vehicles {
-            id
-            name
-            model
-        }
+fragment LandpadItem on Landpad {
+    id
+    full_name
+}
+
+query GetLandpadsCatalog($limit: Int) {
+    landpads(limit: $limit) {
+      ...LandpadItem
     }
 }

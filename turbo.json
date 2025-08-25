@@ -43,6 +43,7 @@
   "globalEnv": [
     "NEXT_RUNTIME",
     "CI",
-    "SENTRY_AUTH_TOKEN"
+    "SENTRY_AUTH_TOKEN",
+    "NODE_ENV"
   ]
 }

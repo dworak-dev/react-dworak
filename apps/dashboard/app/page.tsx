@@ -28,6 +28,13 @@ export default () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 relative">
+      <Button
+        onClick={() => {
+          throw new Error("This is a test error");
+        }}
+      >
+        Sentry.js Test Error
+      </Button>
       <Image width={100} height={100} src={ExampleImage} alt="popo"></Image>
       <div
         style={{
