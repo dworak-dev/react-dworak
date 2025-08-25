@@ -18,7 +18,7 @@ This Turborepo includes the following packages/apps:
 
 - `dashbaord`: a [Next.js](https://nextjs.org/) app
 - `@packages/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@packages/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@packages/eslint`: `eslint` configurations
 - `@packages/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).

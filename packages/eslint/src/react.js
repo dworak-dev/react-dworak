@@ -1,3 +1,4 @@
+// TODO: investigate what the languageOptions with globals do exactly.
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
@@ -5,6 +6,11 @@ import typescript from "typescript-eslint";
 
 import { eslintBaseConfig } from "./base.js";
 
+/*
+ * This configuration extends the base one with React specific rules and plugins.
+ * I am not completely sure what the laguage options with gloals do exactly.
+ * dworak.dev
+ */
 export const eslintReactConfig = typescript.config(
   eslintBaseConfig,
   // React plugin configuration

@@ -6,13 +6,14 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 import turbo from "eslint-plugin-turbo";
 import typescript from "typescript-eslint";
 
-import { customRulesPlugin } from "./rules/index.js";
+import { customRulesPlugin } from "./custom-rules/index.js";
 
 /*
  * The eslint base configuration for all projects.
  * All other configurations should extend this one.
  * Try to keep this configuration as clean as possible,
  * without complicated rules, plugins or anything prone to create conflicts.
+ * dworak.dev
  */
 export const eslintBaseConfig = typescript.config(
   eslint.configs.recommended,
