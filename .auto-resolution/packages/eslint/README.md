@@ -155,6 +155,32 @@ export default typescript.config([
 ]);
 ```
 
+## Custom rules
+
+The custom rules plugin adds optional and opinionated rules to enhance code quality and maintainability. These rules can be enabled or disabled based on project requirements.
+
+- **anonymous-export-default**: There is no need for pages, layouts or other next.js spcial files to have a named export. This ruled is meant to enforce anonymous export defaults on such files. [Source code here.](./src/custom-rules/anonymous-export-default.js)
+- **dash-case-filename**: This rule is meant to enforce dash-case naming for files in several folders. [Source code here.](./src/custom-rules/dash-case-filename.js)
+
+Rules are disabled by default and must be enabled manually in each project that requires them like so:
+
+```js
+// eslint.config.js or eslint.config.mjs
+import { eslintBaseConfig } from "@packages/eslint/base";
+import typescript from "typescript-eslint";
+
+// typescript.config() is used to provide type annotations and autocompletion
+export default typescript.config([
+  ...eslintBaseConfig,
+  {
+    // Your custom rules here
+    rules: {
+      "custom-rules/dash-case-filename": "error",
+    },
+  },
+]);
+```
+
 ### Adding New Custom Rules
 
 Adding new rules is as simple as creating a new file in the `custom-rules` folder and exporting an object with the rule definition. The rule must follow the ESLint rule format. You can refer to the [ESLint documentation](https://eslint.org/docs/developer-guide/working-with-rules) for more information on how to create custom rules.
