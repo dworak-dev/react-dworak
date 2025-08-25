@@ -41,6 +41,15 @@ export default eslintBaseConfig;
 - JavaScript support with `@eslint/js`
 - TypeScript support with `typescript-eslint`
 - Prettier integration for code formatting with `eslint-plugin-prettier`
+- Custom rules from the [custom-rules](#custom-rules) plugin.
+- No secrets plugin with `esilnt-plugin-no-secrets`
+- Turbo plugin for monorepo management with `eslint-plugin-turbo`
+- Simple import sort plugin for organizing imports with `eslint-plugin-simple-import-sort`
+- Converts all errors to warnings for consistent reporting with `eslint-plugin-only-warn`
+
+- JavaScript support with `@eslint/js`
+- TypeScript support with `typescript-eslint`
+- Prettier integration for code formatting with `eslint-plugin-prettier`
 - Custom rules from the [custom-rules](#custom-rules) plugin
 - No-secrets plugin with `eslint-plugin-no-secrets`
 - Turbo plugin for monorepo management with `eslint-plugin-turbo`
@@ -177,6 +186,51 @@ export default typescript.config([
     rules: {
       "custom-rules/dash-case-filename": "error",
     },
+  },
+]);
+```
+
+## Custom rules
+
+The custom rules plugin adds optional and opinionated rules to enhance code quality and maintainability. These rules can be enabled or disabled based on project requirements.
+
+- **anonymous-export-default**: There is no need for pages, layouts or other next.js spcial files to have a named export. This ruled is meant to enforce anonymous export defaults on such files. [Source code here.](./src/custom-rules/anonymous-export-default.js)
+- **dash-case-filename**: This rule is meant to enforce dash-case naming for files in several folders. [Source code here.](./src/custom-rules/dash-case-filename.js)
+
+Rules are disabled by default and must be enabled manually in each project that requires them like so:
+
+```js
+// eslint.config.js or eslint.config.mjs
+import { eslintBaseConfig } from "@packages/eslint/base";
+import typescript from "typescript-eslint";
+
+// typescript.config() is used to provide type annotations and autocompletion
+export default typescript.config([
+  ...eslintBaseConfig,
+  {
+    // Your custom rules here
+    rules: {
+      "custom-rules/dash-case-filename": "error",
+    },
+  },
+]);
+```
+
+### Adding new custom rules
+
+Adding new rules is as simple as creating a new file in the `custom-rules` folder and exporting an object with the rule definition. The rule must follow the ESLint rule format. You can refer to the [ESLint documentation](https://eslint.org/docs/developer-guide/working-with-rules) for more information on how to create custom rules.
+
+Then add the new rule to the plugin:
+
+```js
+// src/custom-rules/index.js
+import myNewRule from "./my-new-rule.js";
+
+export const customRulesPlugin =  {
+  ...
+  rules: {
+    ...
+    "my-new-rule": myNewRule,
   },
 ]);
 ```
