@@ -1,1069 +1,1130 @@
-# This file was generated. Do not edit manually.
+directive @contact(
+  """Other relevant notes can be included here; supports markdown links"""
+  description: String
 
-schema {
-    query: Root
+  """Contact title of the subgraph owner"""
+  name: String!
+
+  """URL where the subgraph's owner can be reached"""
+  url: String
+) on SCHEMA
+
+directive @federation__composeDirective(name: String) on SCHEMA
+
+directive @federation__extends on INTERFACE | OBJECT
+
+directive @federation__external(reason: String) on FIELD_DEFINITION | OBJECT
+
+directive @federation__inaccessible on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
+
+directive @federation__interfaceObject on OBJECT
+
+directive @federation__override(from: String!) on FIELD_DEFINITION
+
+directive @federation__provides(fields: federation__FieldSet!) on FIELD_DEFINITION
+
+directive @federation__requires(fields: federation__FieldSet!) on FIELD_DEFINITION
+
+directive @federation__shareable on FIELD_DEFINITION | OBJECT
+
+directive @federation__tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | SCHEMA | UNION
+
+directive @key(fields: federation__FieldSet!, resolvable: Boolean = true) on INTERFACE | OBJECT
+
+directive @link(as: String, for: link__Purpose, import: [link__Import], url: String) on SCHEMA
+
+type Address {
+  address: String
+  city: String
+  state: String
 }
 
-"An object with an ID"
-interface Node {
-    "The id of the object."
-    id: ID!
+type Capsule {
+  dragon: Dragon @deprecated(reason: "This is not available in the REST API after MongoDB has been deprecated")
+  id: ID
+  landings: Int
+  missions: [CapsuleMission]
+  original_launch: Date
+  reuse_count: Int
+  status: String
+  type: String
 }
 
-"A single film."
-type Film implements Node {
-    characterConnection(after: String, before: String, first: Int, last: Int): FilmCharactersConnection
-    "The ISO 8601 date format of the time that this resource was created."
-    created: String
-    "The name of the director of this film."
-    director: String
-    "The ISO 8601 date format of the time that this resource was edited."
-    edited: String
-    "The episode number of this film."
-    episodeID: Int
-    "The ID of an object"
-    id: ID!
-    "The opening paragraphs at the beginning of this film."
-    openingCrawl: String
-    planetConnection(after: String, before: String, first: Int, last: Int): FilmPlanetsConnection
-    "The name(s) of the producer(s) of this film."
-    producers: [String]
-    "The ISO 8601 date format of film release at original creator country."
-    releaseDate: String
-    speciesConnection(after: String, before: String, first: Int, last: Int): FilmSpeciesConnection
-    starshipConnection(after: String, before: String, first: Int, last: Int): FilmStarshipsConnection
-    "The title of this film."
-    title: String
-    vehicleConnection(after: String, before: String, first: Int, last: Int): FilmVehiclesConnection
+type CapsuleMission {
+  flight: Int
+  name: String
 }
 
-"A connection to a list of items."
-type FilmCharactersConnection {
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    characters: [Person]
-    "A list of edges."
-    edges: [FilmCharactersEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+input CapsulesFind {
+  id: ID
+  landings: Int
+  mission: String
+  original_launch: Date
+  reuse_count: Int
+  status: String
+  type: String
 }
 
-"An edge in a connection."
-type FilmCharactersEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Person
+type Core {
+  asds_attempts: Int
+  asds_landings: Int
+  block: Int
+  id: ID
+  missions: [CapsuleMission]
+  original_launch: Date
+  reuse_count: Int
+  rtls_attempts: Int
+  rtls_landings: Int
+  status: String
+  water_landing: Boolean
 }
 
-"A connection to a list of items."
-type FilmPlanetsConnection {
-    "A list of edges."
-    edges: [FilmPlanetsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    planets: [Planet]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type CoreMission {
+  flight: Int
+  name: String
 }
 
-"An edge in a connection."
-type FilmPlanetsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Planet
+input CoresFind {
+  asds_attempts: Int
+  asds_landings: Int
+  block: Int
+  id: String
+  missions: String
+  original_launch: Date
+  reuse_count: Int
+  rtls_attempts: Int
+  rtls_landings: Int
+  status: String
+  water_landing: Boolean
 }
 
-"A connection to a list of items."
-type FilmSpeciesConnection {
-    "A list of edges."
-    edges: [FilmSpeciesEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
+scalar Date
 
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    species: [Species]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type Distance {
+  feet: Float
+  meters: Float
 }
 
-"An edge in a connection."
-type FilmSpeciesEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Species
+type Dragon {
+  active: Boolean
+  crew_capacity: Int
+  description: String
+  diameter: Distance
+  dry_mass_kg: Int
+  dry_mass_lb: Int
+  first_flight: String
+  heat_shield: DragonHeatShield
+  height_w_trunk: Distance
+  id: ID
+  launch_payload_mass: Mass
+  launch_payload_vol: Volume
+  name: String
+  orbit_duration_yr: Int
+  pressurized_capsule: DragonPressurizedCapsule
+  return_payload_mass: Mass
+  return_payload_vol: Volume
+  sidewall_angle_deg: Float
+  thrusters: [DragonThrust]
+  trunk: DragonTrunk
+  type: String
+  wikipedia: String
 }
 
-"A connection to a list of items."
-type FilmStarshipsConnection {
-    "A list of edges."
-    edges: [FilmStarshipsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    starships: [Starship]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type DragonHeatShield {
+  dev_partner: String
+  material: String
+  size_meters: Float
+  temp_degrees: Int
 }
 
-"An edge in a connection."
-type FilmStarshipsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Starship
+type DragonPressurizedCapsule {
+  payload_volume: Volume
 }
 
-"A connection to a list of items."
-type FilmVehiclesConnection {
-    "A list of edges."
-    edges: [FilmVehiclesEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    vehicles: [Vehicle]
+type DragonThrust {
+  amount: Int
+  fuel_1: String
+  fuel_2: String
+  pods: Int
+  thrust: Force
+  type: String
 }
 
-"An edge in a connection."
-type FilmVehiclesEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Vehicle
+type DragonTrunk {
+  cargo: DragonTrunkCargo
+  trunk_volume: Volume
 }
 
-"A connection to a list of items."
-type FilmsConnection {
-    "A list of edges."
-    edges: [FilmsEdge]
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    films: [Film]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type DragonTrunkCargo {
+  solar_array: Int
+  unpressurized_cargo: Boolean
 }
 
-"An edge in a connection."
-type FilmsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Film
+type Force {
+  kN: Float
+  lbf: Float
 }
 
-"Information about pagination in a connection."
-type PageInfo {
-    "When paginating forwards, the cursor to continue."
-    endCursor: String
-    "When paginating forwards, are there more items?"
-    hasNextPage: Boolean!
-    "When paginating backwards, are there more items?"
-    hasPreviousPage: Boolean!
-    "When paginating backwards, the cursor to continue."
-    startCursor: String
+type HistoriesResult {
+  data: [History]
+  result: Result
 }
 
-"A connection to a list of items."
-type PeopleConnection {
-    "A list of edges."
-    edges: [PeopleEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    people: [Person]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type History {
+  details: String
+  event_date_unix: Date
+  event_date_utc: Date
+  flight: Launch
+  id: ID
+  links: Link
+  title: String
 }
 
-"An edge in a connection."
-type PeopleEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Person
+input HistoryFind {
+  end: Date
+  flight_number: Int
+  id: ID
+  start: Date
 }
 
-"An individual person or character within the Star Wars universe."
-type Person implements Node {
-    """
-
-    The birth year of the person, using the in-universe standard of BBY or ABY -
-    Before the Battle of Yavin or After the Battle of Yavin. The Battle of Yavin is
-    a battle that occurs at the end of Star Wars episode IV: A New Hope.
-    """
-    birthYear: String
-    "The ISO 8601 date format of the time that this resource was created."
-    created: String
-    "The ISO 8601 date format of the time that this resource was edited."
-    edited: String
-    """
-
-    The eye color of this person. Will be "unknown" if not known or "n/a" if the
-    person does not have an eye.
-    """
-    eyeColor: String
-    filmConnection(after: String, before: String, first: Int, last: Int): PersonFilmsConnection
-    """
-
-    The gender of this person. Either "Male", "Female" or "unknown",
-    "n/a" if the person does not have a gender.
-    """
-    gender: String
-    """
-
-    The hair color of this person. Will be "unknown" if not known or "n/a" if the
-    person does not have hair.
-    """
-    hairColor: String
-    "The height of the person in centimeters."
-    height: Int
-    "A planet that this person was born on or inhabits."
-    homeworld: Planet
-    "The ID of an object"
-    id: ID!
-    "The mass of the person in kilograms."
-    mass: Float
-    "The name of this person."
-    name: String
-    "The skin color of this person."
-    skinColor: String
-    "The species that this person belongs to, or null if unknown."
-    species: Species
-    starshipConnection(after: String, before: String, first: Int, last: Int): PersonStarshipsConnection
-    vehicleConnection(after: String, before: String, first: Int, last: Int): PersonVehiclesConnection
+type Info {
+  ceo: String
+  coo: String
+  cto: String
+  cto_propulsion: String
+  employees: Int
+  founded: Int
+  founder: String
+  headquarters: Address
+  launch_sites: Int
+  links: InfoLinks
+  name: String
+  summary: String
+  test_sites: Int
+  valuation: Float
+  vehicles: Int
 }
 
-"A connection to a list of items."
-type PersonFilmsConnection {
-    "A list of edges."
-    edges: [PersonFilmsEdge]
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    films: [Film]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type InfoLinks {
+  elon_twitter: String
+  flickr: String
+  twitter: String
+  website: String
 }
 
-"An edge in a connection."
-type PersonFilmsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Film
+type Landpad {
+  attempted_landings: String
+  details: String
+  full_name: String
+  id: ID
+  landing_type: String
+  location: Location
+  status: String
+  successful_landings: String
+  wikipedia: String
 }
 
-"A connection to a list of items."
-type PersonStarshipsConnection {
-    "A list of edges."
-    edges: [PersonStarshipsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    starships: [Starship]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type Launch {
+  details: String
+  id: ID
+  is_tentative: Boolean
+  launch_date_local: Date
+  launch_date_unix: Date
+  launch_date_utc: Date
+  launch_site: LaunchSite
+  launch_success: Boolean
+  launch_year: String
+  links: LaunchLinks
+  mission_id: [String]
+  mission_name: String
+  rocket: LaunchRocket
+  ships: [Ship]
+  static_fire_date_unix: Date
+  static_fire_date_utc: Date
+  telemetry: LaunchTelemetry
+  tentative_max_precision: String
+  upcoming: Boolean
 }
 
-"An edge in a connection."
-type PersonStarshipsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Starship
+input LaunchFind {
+  apoapsis_km: Float
+  block: Int
+  cap_serial: String
+  capsule_reuse: String
+  core_flight: Int
+  core_reuse: String
+  core_serial: String
+  customer: String
+  eccentricity: Float
+  end: Date
+  epoch: Date
+  fairings_recovered: String
+  fairings_recovery_attempt: String
+  fairings_reuse: String
+  fairings_reused: String
+  fairings_ship: String
+  gridfins: String
+  id: ID
+  inclination_deg: Float
+  land_success: String
+  landing_intent: String
+  landing_type: String
+  landing_vehicle: String
+  launch_date_local: Date
+  launch_date_utc: Date
+  launch_success: String
+  launch_year: String
+  legs: String
+  lifespan_years: Float
+  longitude: Float
+  manufacturer: String
+  mean_motion: Float
+  mission_id: String
+  mission_name: String
+  nationality: String
+  norad_id: Int
+  orbit: String
+  payload_id: String
+  payload_type: String
+  periapsis_km: Float
+  period_min: Float
+  raan: Float
+  reference_system: String
+  regime: String
+  reused: String
+  rocket_id: String
+  rocket_name: String
+  rocket_type: String
+  second_stage_block: String
+  semi_major_axis_km: Float
+  ship: String
+  side_core1_reuse: String
+  side_core2_reuse: String
+  site_id: String
+  site_name: String
+  site_name_long: String
+  start: Date
+  tbd: String
+  tentative: String
+  tentative_max_precision: String
 }
 
-"A connection to a list of items."
-type PersonVehiclesConnection {
-    "A list of edges."
-    edges: [PersonVehiclesEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    vehicles: [Vehicle]
+type LaunchLinks {
+  article_link: String
+  flickr_images: [String]
+  mission_patch: String
+  mission_patch_small: String
+  presskit: String
+  reddit_campaign: String
+  reddit_launch: String
+  reddit_media: String
+  reddit_recovery: String
+  video_link: String
+  wikipedia: String
 }
 
-"An edge in a connection."
-type PersonVehiclesEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Vehicle
+type LaunchRocket {
+  fairings: LaunchRocketFairings
+  first_stage: LaunchRocketFirstStage
+  rocket: Rocket
+  rocket_name: String
+  rocket_type: String
+  second_stage: LaunchRocketSecondStage
+}
+
+type LaunchRocketFairings {
+  recovered: Boolean
+  recovery_attempt: Boolean
+  reused: Boolean
+  ship: String
+}
+
+type LaunchRocketFirstStage {
+  cores: [LaunchRocketFirstStageCore]
+}
+
+type LaunchRocketFirstStageCore {
+  block: Int
+  core: Core
+  flight: Int
+  gridfins: Boolean
+  land_success: Boolean
+  landing_intent: Boolean
+  landing_type: String
+  landing_vehicle: String
+  legs: Boolean
+  reused: Boolean
+}
+
+type LaunchRocketSecondStage {
+  block: Int
+  payloads: [Payload]
+}
+
+type LaunchSite {
+  site_id: String
+  site_name: String
+  site_name_long: String
+}
+
+type LaunchTelemetry {
+  flight_club: String
+}
+
+type LaunchesPastResult {
+  data: [Launch]
+  result: Result
+}
+
+type Launchpad {
+  attempted_launches: Int
+  details: String
+  id: ID
+  location: Location
+  name: String
+  status: String
+  successful_launches: Int
+  vehicles_launched: [Rocket]
+  wikipedia: String
+}
+
+type Link {
+  article: String
+  reddit: String
+  wikipedia: String
+}
+
+type Location {
+  latitude: Float
+  longitude: Float
+  name: String
+  region: String
+}
+
+type Mass {
+  kg: Int
+  lb: Int
+}
+
+type Mission {
+  description: String
+  id: ID
+  manufacturers: [String]
+  name: String
+  payloads: [Payload]
+  twitter: String
+  website: String
+  wikipedia: String
+}
+
+type MissionResult {
+  data: [Mission]
+  result: Result
+}
+
+input MissionsFind {
+  id: ID
+  manufacturer: String
+  name: String
+  payload_id: String
+}
+
+type Mutation {
+  """
+  delete data from the table: "users"
+  """
+  delete_users(
+    """filter the rows which have to be deleted"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  insert data into the table: "users"
+  """
+  insert_users(
+    """the rows to be inserted"""
+    objects: [users_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  """
+  update data of the table: "users"
+  """
+  update_users(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_bool_exp!
+  ): users_mutation_response
+}
+
+scalar ObjectID
+
+type Payload {
+  customers: [String]
+  id: ID
+  manufacturer: String
+  nationality: String
+  norad_id: [Int]
+  orbit: String
+  orbit_params: PayloadOrbitParams
+  payload_mass_kg: Float
+  payload_mass_lbs: Float
+  payload_type: String
+  reused: Boolean
+}
+
+type PayloadOrbitParams {
+  apoapsis_km: Float
+  arg_of_pericenter: Float
+  eccentricity: Float
+  epoch: Date
+  inclination_deg: Float
+  lifespan_years: Float
+  longitude: Float
+  mean_anomaly: Float
+  mean_motion: Float
+  periapsis_km: Float
+  period_min: Float
+  raan: Float
+  reference_system: String
+  regime: String
+  semi_major_axis_km: Float
+}
+
+input PayloadsFind {
+  apoapsis_km: Float
+  customer: String
+  eccentricity: Float
+  epoch: Date
+  inclination_deg: Float
+  lifespan_years: Float
+  longitude: Float
+  manufacturer: String
+  mean_motion: Float
+  nationality: String
+  norad_id: Int
+  orbit: String
+  payload_id: ID
+  payload_type: String
+  periapsis_km: Float
+  period_min: Float
+  raan: Float
+  reference_system: String
+  regime: String
+  reused: Boolean
+  semi_major_axis_km: Float
+}
+
+type Query {
+  _service: _Service!
+  capsule(id: ID!): Capsule
+  capsules(find: CapsulesFind, limit: Int, offset: Int, order: String, sort: String): [Capsule]
+  capsulesPast(find: CapsulesFind, limit: Int, offset: Int, order: String, sort: String): [Capsule]
+  capsulesUpcoming(find: CapsulesFind, limit: Int, offset: Int, order: String, sort: String): [Capsule]
+  company: Info
+  core(id: ID!): Core
+  cores(find: CoresFind, limit: Int, offset: Int, order: String, sort: String): [Core]
+  coresPast(find: CoresFind, limit: Int, offset: Int, order: String, sort: String): [Core]
+  coresUpcoming(find: CoresFind, limit: Int, offset: Int, order: String, sort: String): [Core]
+  dragon(id: ID!): Dragon
+  dragons(limit: Int, offset: Int): [Dragon]
+  histories(find: HistoryFind, limit: Int, offset: Int, order: String, sort: String): [History]
+  historiesResult(find: HistoryFind, limit: Int, offset: Int, order: String, sort: String): HistoriesResult
+  history(id: ID!): History
+  landpad(id: ID!): Landpad
+  landpads(limit: Int, offset: Int): [Landpad]
+  launch(id: ID!): Launch
+  launchLatest(offset: Int): Launch
+  launchNext(offset: Int): Launch
+  launches(find: LaunchFind, limit: Int, offset: Int, order: String, sort: String): [Launch]
+  launchesPast(find: LaunchFind, limit: Int, offset: Int, order: String, sort: String): [Launch]
+  launchesPastResult(find: LaunchFind, limit: Int, offset: Int, order: String, sort: String): LaunchesPastResult
+  launchesUpcoming(find: LaunchFind, limit: Int, offset: Int, order: String, sort: String): [Launch]
+  launchpad(id: ID!): Launchpad
+  launchpads(limit: Int, offset: Int): [Launchpad]
+  mission(id: ID!): Mission @deprecated(reason: "Mission is not available on REST API after MongoDB deprecation")
+  missions(find: MissionsFind, limit: Int, offset: Int): [Mission] @deprecated(reason: "Mission is not available on REST API after MongoDB deprecation")
+  missionsResult(find: MissionsFind, limit: Int, offset: Int): MissionResult @deprecated(reason: "Mission is not available on REST API after MongoDB deprecation")
+  payload(id: ID!): Payload
+  payloads(find: PayloadsFind, limit: Int, offset: Int, order: String, sort: String): [Payload]
+  roadster: Roadster
+  rocket(id: ID!): Rocket
+  rockets(limit: Int, offset: Int): [Rocket]
+  rocketsResult(limit: Int, offset: Int): RocketsResult
+  ship(id: ID!): Ship
+  ships(find: ShipsFind, limit: Int, offset: Int, order: String, sort: String): [Ship]
+  shipsResult(find: ShipsFind, limit: Int, offset: Int, order: String, sort: String): ShipsResult
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the nuber of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the nuber of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: uuid!): users
+}
+
+type Result {
+  totalCount: Int
+}
+
+type Roadster {
+  apoapsis_au: Float
+  details: String
+  earth_distance_km: Float
+  earth_distance_mi: Float
+  eccentricity: Float
+  epoch_jd: Float
+  inclination: Float
+  launch_date_unix: Date
+  launch_date_utc: Date
+  launch_mass_kg: Int
+  launch_mass_lbs: Int
+  longitude: Float
+  mars_distance_km: Float
+  mars_distance_mi: Float
+  name: String
+  norad_id: Int
+  orbit_type: Float
+  periapsis_arg: Float
+  periapsis_au: Float
+  period_days: Float
+  semi_major_axis_au: Float
+  speed_kph: Float
+  speed_mph: Float
+  wikipedia: String
+}
+
+type Rocket {
+  active: Boolean
+  boosters: Int
+  company: String
+  cost_per_launch: Int
+  country: String
+  description: String
+  diameter: Distance
+  engines: RocketEngines
+  first_flight: Date
+  first_stage: RocketFirstStage
+  height: Distance
+  id: ID
+  landing_legs: RocketLandingLegs
+  mass: Mass
+  name: String
+  payload_weights: [RocketPayloadWeight]
+  second_stage: RocketSecondStage
+  stages: Int
+  success_rate_pct: Int
+  type: String
+  wikipedia: String
+}
+
+type RocketEngines {
+  engine_loss_max: String
+  layout: String
+  number: Int
+  propellant_1: String
+  propellant_2: String
+  thrust_sea_level: Force
+  thrust_to_weight: Float
+  thrust_vacuum: Force
+  type: String
+  version: String
+}
+
+type RocketFirstStage {
+  burn_time_sec: Int
+  engines: Int
+  fuel_amount_tons: Float
+  reusable: Boolean
+  thrust_sea_level: Force
+  thrust_vacuum: Force
+}
+
+type RocketLandingLegs {
+  material: String
+  number: Int
+}
+
+type RocketPayloadWeight {
+  id: String
+  kg: Int
+  lb: Int
+  name: String
+}
+
+type RocketSecondStage {
+  burn_time_sec: Int
+  engines: Int
+  fuel_amount_tons: Float
+  payloads: RocketSecondStagePayloads
+  thrust: Force
+}
+
+type RocketSecondStagePayloadCompositeFairing {
+  diameter: Distance
+  height: Distance
+}
+
+type RocketSecondStagePayloads {
+  composite_fairing: RocketSecondStagePayloadCompositeFairing
+  option_1: String
+}
+
+type RocketsResult {
+  data: [Rocket]
+  result: Result
+}
+
+type Ship {
+  abs: Int
+  active: Boolean
+  attempted_landings: Int
+  class: Int
+  course_deg: Int
+  home_port: String
+  id: ID
+  image: String
+  imo: Int
+  missions: [ShipMission]
+  mmsi: Int
+  model: String
+  name: String
+  position: ShipLocation
+  roles: [String]
+  speed_kn: Float
+  status: String
+  successful_landings: Int
+  type: String
+  url: String
+  weight_kg: Int
+  weight_lbs: Int
+  year_built: Int
+}
+
+type ShipLocation {
+  latitude: Float
+  longitude: Float
+}
+
+type ShipMission {
+  flight: String
+  name: String
+}
+
+input ShipsFind {
+  abs: Int
+  active: Boolean
+  attempted_landings: Int
+  class: Int
+  course_deg: Int
+  home_port: String
+  id: ID
+  imo: Int
+  latitude: Float
+  longitude: Float
+  mission: String
+  mmsi: Int
+  model: String
+  name: String
+  role: String
+  speed_kn: Int
+  status: String
+  successful_landings: Int
+  type: String
+  weight_kg: Int
+  weight_lbs: Int
+  year_built: Int
+}
+
+type ShipsResult {
+  data: [Ship]
+  result: Result
 }
 
 """
-
-A large mass, planet or planetoid in the Star Wars Universe, at the time of
-0 ABY.
+expression to compare columns of type String. All fields are combined with logical 'AND'.
 """
-type Planet implements Node {
-    "The climates of this planet."
-    climates: [String]
-    "The ISO 8601 date format of the time that this resource was created."
-    created: String
-    "The diameter of this planet in kilometers."
-    diameter: Int
-    "The ISO 8601 date format of the time that this resource was edited."
-    edited: String
-    filmConnection(after: String, before: String, first: Int, last: Int): PlanetFilmsConnection
-    """
-
-    A number denoting the gravity of this planet, where "1" is normal or 1 standard
-    G. "2" is twice or 2 standard Gs. "0.5" is half or 0.5 standard Gs.
-    """
-    gravity: String
-    "The ID of an object"
-    id: ID!
-    "The name of this planet."
-    name: String
-    """
-
-    The number of standard days it takes for this planet to complete a single orbit
-    of its local star.
-    """
-    orbitalPeriod: Int
-    "The average population of sentient beings inhabiting this planet."
-    population: Float
-    residentConnection(after: String, before: String, first: Int, last: Int): PlanetResidentsConnection
-    """
-
-    The number of standard hours it takes for this planet to complete a single
-    rotation on its axis.
-    """
-    rotationPeriod: Int
-    """
-
-    The percentage of the planet surface that is naturally occurring water or bodies
-    of water.
-    """
-    surfaceWater: Float
-    "The terrains of this planet."
-    terrains: [String]
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
 }
 
-"A connection to a list of items."
-type PlanetFilmsConnection {
-    "A list of edges."
-    edges: [PlanetFilmsEdge]
-    """
+type Subscription {
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
 
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    films: [Film]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
+    """limit the nuber of rows returned"""
+    limit: Int
 
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the nuber of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: uuid!): users
 }
 
-"An edge in a connection."
-type PlanetFilmsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Film
+type Volume {
+  cubic_feet: Int
+  cubic_meters: Int
 }
 
-"A connection to a list of items."
-type PlanetResidentsConnection {
-    "A list of edges."
-    edges: [PlanetResidentsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
+scalar _Any
 
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    residents: [Person]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+type _Service {
+  sdl: String
 }
 
-"An edge in a connection."
-type PlanetResidentsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Person
+"""conflict action"""
+enum conflict_action {
+  """ignore the insert on this row"""
+  ignore
+
+  """update the row with the given values"""
+  update
 }
 
-"A connection to a list of items."
-type PlanetsConnection {
-    "A list of edges."
-    edges: [PlanetsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
+scalar federation__FieldSet
 
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    planets: [Planet]
-    """
+scalar link__Import
 
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+enum link__Purpose {
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
 }
 
-"An edge in a connection."
-type PlanetsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Planet
+"""column ordering options"""
+enum order_by {
+  """in the ascending order, nulls last"""
+  asc
+
+  """in the ascending order, nulls first"""
+  asc_nulls_first
+
+  """in the ascending order, nulls last"""
+  asc_nulls_last
+
+  """in the descending order, nulls first"""
+  desc
+
+  """in the descending order, nulls first"""
+  desc_nulls_first
+
+  """in the descending order, nulls last"""
+  desc_nulls_last
 }
 
-type Root {
-    allFilms(after: String, before: String, first: Int, last: Int): FilmsConnection
-    allPeople(after: String, before: String, first: Int, last: Int): PeopleConnection
-    allPlanets(after: String, before: String, first: Int, last: Int): PlanetsConnection
-    allSpecies(after: String, before: String, first: Int, last: Int): SpeciesConnection
-    allStarships(after: String, before: String, first: Int, last: Int): StarshipsConnection
-    allVehicles(after: String, before: String, first: Int, last: Int): VehiclesConnection
-    film(filmID: ID, id: ID): Film
-    "Fetches an object given its ID"
-    node(
-        "The ID of an object"
-        id: ID!
-    ): Node
-    person(id: ID, personID: ID): Person
-    planet(id: ID, planetID: ID): Planet
-    species(id: ID, speciesID: ID): Species
-    starship(id: ID, starshipID: ID): Starship
-    vehicle(id: ID, vehicleID: ID): Vehicle
+scalar timestamptz
+
+"""
+expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
 }
 
-"A type of person or character within the Star Wars Universe."
-type Species implements Node {
-    "The average height of this species in centimeters."
-    averageHeight: Float
-    "The average lifespan of this species in years, null if unknown."
-    averageLifespan: Int
-    "The classification of this species, such as \"mammal\" or \"reptile\"."
-    classification: String
-    "The ISO 8601 date format of the time that this resource was created."
-    created: String
-    "The designation of this species, such as \"sentient\"."
-    designation: String
-    "The ISO 8601 date format of the time that this resource was edited."
-    edited: String
-    """
-
-    Common eye colors for this species, null if this species does not typically
-    have eyes.
-    """
-    eyeColors: [String]
-    filmConnection(after: String, before: String, first: Int, last: Int): SpeciesFilmsConnection
-    """
-
-    Common hair colors for this species, null if this species does not typically
-    have hair.
-    """
-    hairColors: [String]
-    "A planet that this species originates from."
-    homeworld: Planet
-    "The ID of an object"
-    id: ID!
-    "The language commonly spoken by this species."
-    language: String
-    "The name of this species."
-    name: String
-    personConnection(after: String, before: String, first: Int, last: Int): SpeciesPeopleConnection
-    """
-
-    Common skin colors for this species, null if this species does not typically
-    have skin.
-    """
-    skinColors: [String]
+"""
+columns and relationships of "users"
+"""
+type users {
+  id: uuid!
+  name: String
+  rocket: String
+  timestamp: timestamptz!
+  twitter: String
 }
 
-"A connection to a list of items."
-type SpeciesConnection {
-    "A list of edges."
-    edges: [SpeciesEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    species: [Species]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+"""
+aggregated selection of "users"
+"""
+type users_aggregate {
+  aggregate: users_aggregate_fields
+  nodes: [users!]!
 }
 
-"An edge in a connection."
-type SpeciesEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Species
+"""
+aggregate fields of "users"
+"""
+type users_aggregate_fields {
+  count(columns: [users_select_column!], distinct: Boolean): Int
+  max: users_max_fields
+  min: users_min_fields
 }
 
-"A connection to a list of items."
-type SpeciesFilmsConnection {
-    "A list of edges."
-    edges: [SpeciesFilmsEdge]
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    films: [Film]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+"""
+order by aggregate values of table "users"
+"""
+input users_aggregate_order_by {
+  count: order_by
+  max: users_max_order_by
+  min: users_min_order_by
 }
 
-"An edge in a connection."
-type SpeciesFilmsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Film
+"""
+input type for inserting array relation for remote table "users"
+"""
+input users_arr_rel_insert_input {
+  data: [users_insert_input!]!
+  on_conflict: users_on_conflict
 }
 
-"A connection to a list of items."
-type SpeciesPeopleConnection {
-    "A list of edges."
-    edges: [SpeciesPeopleEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    people: [Person]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input users_bool_exp {
+  _and: [users_bool_exp]
+  _not: users_bool_exp
+  _or: [users_bool_exp]
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+  rocket: String_comparison_exp
+  timestamp: timestamptz_comparison_exp
+  twitter: String_comparison_exp
 }
 
-"An edge in a connection."
-type SpeciesPeopleEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Person
+"""
+unique or primary key constraints on table "users"
+"""
+enum users_constraint {
+  constraint
+  key
+  or
+  primary
+  unique
+  users_pkey
 }
 
-"A single transport craft that has hyperdrive capability."
-type Starship implements Node {
-    """
-
-    The Maximum number of Megalights this starship can travel in a standard hour.
-    A "Megalight" is a standard unit of distance and has never been defined before
-    within the Star Wars universe. This figure is only really useful for measuring
-    the difference in speed of starships. We can assume it is similar to AU, the
-    distance between our Sun (Sol) and Earth.
-    """
-    MGLT: Int
-    "The maximum number of kilograms that this starship can transport."
-    cargoCapacity: Float
-    """
-
-    The maximum length of time that this starship can provide consumables for its
-    entire crew without having to resupply.
-    """
-    consumables: String
-    "The cost of this starship new, in galactic credits."
-    costInCredits: Float
-    "The ISO 8601 date format of the time that this resource was created."
-    created: String
-    "The number of personnel needed to run or pilot this starship."
-    crew: String
-    "The ISO 8601 date format of the time that this resource was edited."
-    edited: String
-    filmConnection(after: String, before: String, first: Int, last: Int): StarshipFilmsConnection
-    "The class of this starships hyperdrive."
-    hyperdriveRating: Float
-    "The ID of an object"
-    id: ID!
-    "The length of this starship in meters."
-    length: Float
-    "The manufacturers of this starship."
-    manufacturers: [String]
-    """
-
-    The maximum speed of this starship in atmosphere. null if this starship is
-    incapable of atmosphering flight.
-    """
-    maxAtmospheringSpeed: Int
-    """
-
-    The model or official name of this starship. Such as "T-65 X-wing" or "DS-1
-    Orbital Battle Station".
-    """
-    model: String
-    "The name of this starship. The common name, such as \"Death Star\"."
-    name: String
-    "The number of non-essential people this starship can transport."
-    passengers: String
-    pilotConnection(after: String, before: String, first: Int, last: Int): StarshipPilotsConnection
-    """
-
-    The class of this starship, such as "Starfighter" or "Deep Space Mobile
-    Battlestation"
-    """
-    starshipClass: String
+"""
+input type for inserting data into table "users"
+"""
+input users_insert_input {
+  id: uuid
+  name: String
+  rocket: String
+  timestamp: timestamptz
+  twitter: String
 }
 
-"A connection to a list of items."
-type StarshipFilmsConnection {
-    "A list of edges."
-    edges: [StarshipFilmsEdge]
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    films: [Film]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+"""aggregate max on columns"""
+type users_max_fields {
+  name: String
+  rocket: String
+  timestamp: timestamptz
+  twitter: String
 }
 
-"An edge in a connection."
-type StarshipFilmsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Film
+"""
+order by max() on columns of table "users"
+"""
+input users_max_order_by {
+  name: order_by
+  rocket: order_by
+  timestamp: order_by
+  twitter: order_by
 }
 
-"A connection to a list of items."
-type StarshipPilotsConnection {
-    "A list of edges."
-    edges: [StarshipPilotsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    pilots: [Person]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+"""aggregate min on columns"""
+type users_min_fields {
+  name: String
+  rocket: String
+  timestamp: timestamptz
+  twitter: String
 }
 
-"An edge in a connection."
-type StarshipPilotsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Person
+"""
+order by min() on columns of table "users"
+"""
+input users_min_order_by {
+  name: order_by
+  rocket: order_by
+  timestamp: order_by
+  twitter: order_by
 }
 
-"A connection to a list of items."
-type StarshipsConnection {
-    "A list of edges."
-    edges: [StarshipsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
+"""
+response of any mutation on the table "users"
+"""
+type users_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
 
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    starships: [Starship]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+  """data of the affected rows by the mutation"""
+  returning: [users!]!
 }
 
-"An edge in a connection."
-type StarshipsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Starship
+"""
+input type for inserting object relation for remote table "users"
+"""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+  on_conflict: users_on_conflict
 }
 
-"A single transport craft that does not have hyperdrive capability"
-type Vehicle implements Node {
-    "The maximum number of kilograms that this vehicle can transport."
-    cargoCapacity: Float
-    """
-
-    The maximum length of time that this vehicle can provide consumables for its
-    entire crew without having to resupply.
-    """
-    consumables: String
-    "The cost of this vehicle new, in Galactic Credits."
-    costInCredits: Float
-    "The ISO 8601 date format of the time that this resource was created."
-    created: String
-    "The number of personnel needed to run or pilot this vehicle."
-    crew: String
-    "The ISO 8601 date format of the time that this resource was edited."
-    edited: String
-    filmConnection(after: String, before: String, first: Int, last: Int): VehicleFilmsConnection
-    "The ID of an object"
-    id: ID!
-    "The length of this vehicle in meters."
-    length: Float
-    "The manufacturers of this vehicle."
-    manufacturers: [String]
-    "The maximum speed of this vehicle in atmosphere."
-    maxAtmospheringSpeed: Int
-    """
-
-    The model or official name of this vehicle. Such as "All-Terrain Attack
-    Transport".
-    """
-    model: String
-    """
-
-    The name of this vehicle. The common name, such as "Sand Crawler" or "Speeder
-    bike".
-    """
-    name: String
-    "The number of non-essential people this vehicle can transport."
-    passengers: String
-    pilotConnection(after: String, before: String, first: Int, last: Int): VehiclePilotsConnection
-    "The class of this vehicle, such as \"Wheeled\" or \"Repulsorcraft\"."
-    vehicleClass: String
+"""
+on conflict condition type for table "users"
+"""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]!
 }
 
-"A connection to a list of items."
-type VehicleFilmsConnection {
-    "A list of edges."
-    edges: [VehicleFilmsEdge]
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    films: [Film]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+"""
+ordering options when selecting data from "users"
+"""
+input users_order_by {
+  id: order_by
+  name: order_by
+  rocket: order_by
+  timestamp: order_by
+  twitter: order_by
 }
 
-"An edge in a connection."
-type VehicleFilmsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Film
+"""
+select columns of table "users"
+"""
+enum users_select_column {
+  column
+  id
+  name
+  rocket
+  timestamp
+  twitter
 }
 
-"A connection to a list of items."
-type VehiclePilotsConnection {
-    "A list of edges."
-    edges: [VehiclePilotsEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    pilots: [Person]
-    """
-
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
+"""
+input type for updating data in table "users"
+"""
+input users_set_input {
+  id: uuid
+  name: String
+  rocket: String
+  timestamp: timestamptz
+  twitter: String
 }
 
-"An edge in a connection."
-type VehiclePilotsEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Person
+"""
+update columns of table "users"
+"""
+enum users_update_column {
+  column
+  id
+  name
+  rocket
+  timestamp
+  twitter
 }
 
-"A connection to a list of items."
-type VehiclesConnection {
-    "A list of edges."
-    edges: [VehiclesEdge]
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    """
+scalar uuid
 
-    A count of the total number of objects in this connection, ignoring pagination.
-    This allows a client to fetch the first five objects by passing "5" as the
-    argument to "first", then fetch the total count so it could display "5 of 83",
-    for example.
-    """
-    totalCount: Int
-    """
-
-    A list of all of the objects returned in the connection. This is a convenience
-    field provided for quickly exploring the API; rather than querying for
-    "{ edges { node } }" when no edge data is needed, this field can be be used
-    instead. Note that when clients like Relay need to fetch the "cursor" field on
-    the edge to enable efficient pagination, this shortcut cannot be used, and the
-    full "{ edges { node } }" version should be used instead.
-    """
-    vehicles: [Vehicle]
-}
-
-"An edge in a connection."
-type VehiclesEdge {
-    "A cursor for use in pagination"
-    cursor: String!
-    "The item at the end of the edge"
-    node: Vehicle
+"""
+expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
 }

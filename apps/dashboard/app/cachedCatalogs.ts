@@ -1,10 +1,8 @@
 import { getCachedCatalogs } from "@packages/graphql/cachedCatalogs";
-import { envVars } from "@packages/shared/envVars";
-import { GraphQLClient } from "graphql-request";
+import { getGraphqlClient } from "@packages/graphql/graphqlClient";
+import { publicVars } from "@packages/shared/publicVars";
 
-const client = new GraphQLClient(envVars.GRAPHQL_API_URL, {
-  errorPolicy: "all",
-});
+const client = getGraphqlClient(publicVars.GRAPHQL_API_URL);
 
 const dashboardCachedCatalogs = getCachedCatalogs(client);
 

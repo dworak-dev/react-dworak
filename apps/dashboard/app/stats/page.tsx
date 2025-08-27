@@ -1,8 +1,8 @@
-import { dashboardChartsRouteConfig } from "@packages/shared/routes";
+import { dashboardRouteConfigs } from "@packages/shared/routes";
 
 export default () => (
   <div>
     <h1 style={{ fontSize: 30 }}>Estadisticas</h1>
-    <a href={dashboardChartsRouteConfig.getRoute()}>Graficas</a>
+    <a href={dashboardRouteConfigs.charts.getRoute()}>Graficas</a>
   </div>
 );

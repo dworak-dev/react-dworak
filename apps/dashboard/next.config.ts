@@ -1,10 +1,10 @@
-import { envVars } from "@packages/shared/envVars";
+import { privateVars } from "@packages/shared/privateVars";
 import { dashboardRouteConfigs } from "@packages/shared/routes";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";
 
 // Routes renames are imported from a shared config and mapped to the Next.js format.
-const mappedRoutes = dashboardRouteConfigs
+const mappedRoutes = Object.values(dashboardRouteConfigs)
   .map((i) =>
     i.rewrites.map((rewrite) => ({
       source: rewrite,
@@ -26,9 +26,9 @@ const withSentryNextConfig = withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: envVars.SENTRY_JS_ORG,
+  org: privateVars.SENTRY_JS_ORG,
 
-  project: envVars.SENTRY_JS_PROJECT,
+  project: privateVars.SENTRY_JS_PROJECT,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -43,10 +43,10 @@ const withSentryNextConfig = withSentryConfig(nextConfig, {
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: `/${envVars.SENTRY_JS_METRICS_PATH}`,
+  tunnelRoute: `/${privateVars.SENTRY_JS_METRICS_PATH}`,
 
   // This token is used to upload source maps to Sentry.
-  authToken: process.env.SENTRY_AUTH_TOKEN,
+  authToken: privateVars.SENTRY_AUTH_TOKEN,
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,

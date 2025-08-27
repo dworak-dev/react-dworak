@@ -6,8 +6,9 @@
     "@packages/typescript": "*"
   },
   "exports": {
-    "./envVars": "./src/envVars.ts",
-    "./routes": "./src/routes/index.ts"
+    "./routes": "./src/routes/index.ts",
+    "./publicVars": "./src/publicVars.ts",
+    "./privateVars": "./src/privateVars.ts"
   },
   "private": true,
   "scripts": {

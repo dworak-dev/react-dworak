@@ -18,7 +18,7 @@
     "check-types": "turbo run check-types",
     "depcheck": "depcheck --ignores='typescript,prettier'",
     "dev": "turbo run dev",
-    "docker:dashboard:build": "docker build -t dashboard -f apps/dashboard/Dockerfile .",
+    "docker:dashboard:build": "docker build -t dashboard -f apps/dashboard/Dockerfile . --debug",
     "docker:dashboard:run": "docker run --name my-dashboard --rm -p 3000:3000 dashboard",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",

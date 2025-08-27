@@ -14,10 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}": typeof types.LandpadItemFragmentDoc,
+    "fragment LandpadItem on Landpad {\n  id\n  full_name\n  details\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}": typeof types.LandpadItemFragmentDoc,
 };
 const documents: Documents = {
-    "fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}": types.LandpadItemFragmentDoc,
+    "fragment LandpadItem on Landpad {\n  id\n  full_name\n  details\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}": types.LandpadItemFragmentDoc,
 };
 
 /**
@@ -37,7 +37,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}"): (typeof documents)["fragment LandpadItem on Landpad {\n  id\n  full_name\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}"];
+export function graphql(source: "fragment LandpadItem on Landpad {\n  id\n  full_name\n  details\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}"): (typeof documents)["fragment LandpadItem on Landpad {\n  id\n  full_name\n  details\n}\n\nquery GetLandpadsCatalog($limit: Int) {\n  landpads(limit: $limit) {\n    ...LandpadItem\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

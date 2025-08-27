@@ -1,9 +1,9 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import { envVars } from "@packages/shared/envVars";
+import { publicVars } from "@packages/shared/publicVars";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: envVars.GRAPHQL_API_URL,
+  schema: publicVars.GRAPHQL_API_URL,
   documents: "src/**/*.graphql",
   generates: {
     "autogen/": {
@@ -12,6 +12,9 @@ const config: CodegenConfig = {
       presetConfig: {
         fragmentMasking: false,
       },
+    },
+    "autogen/schema.graphql": {
+      plugins: ["schema-ast"],
     },
   },
 };

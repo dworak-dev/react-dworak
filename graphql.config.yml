@@ -1,4 +1,4 @@
-schema: ./autogen/schema.graphql
+schema: ./packages/graphql/autogen/schema.graphql
 documents: '**/*.graphql'
 extensions:
   endpoints:

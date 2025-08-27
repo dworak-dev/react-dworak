@@ -44,4 +44,4 @@ COPY --from=installer --chown=nextjs:nodejs /app/apps/dashboard/public ./apps/da
 
 EXPOSE 3000
  
-CMD node apps/dashboard/server.js
+CMD ["node", "apps/dashboard/server.js"]

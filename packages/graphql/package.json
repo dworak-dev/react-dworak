@@ -16,14 +16,15 @@
   "exports": {
     ".": "./autogen/graphql.ts",
     "./CachedQuery": "./src/CachedQuery.ts",
-    "./cachedCatalogs": "./src/cachedCatalogs.ts"
+    "./cachedCatalogs": "./src/cachedCatalogs.ts",
+    "./graphqlClient": "./src/graphqlClient.ts"
   },
   "private": true,
   "scripts": {
     "check-types": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "sync": "graphql-codegen --config src/codegen.ts"
+    "sync": "graphql-codegen --config codegen.ts && yarn lint:fix"
   },
   "type": "module"
 }

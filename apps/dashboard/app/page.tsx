@@ -35,6 +35,7 @@ export default () => {
       >
         Sentry.js Test Error
       </Button>
+
       <Image width={100} height={100} src={BlueCircle} alt="popo"></Image>
       <div
         style={{

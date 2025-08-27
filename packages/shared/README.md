@@ -20,10 +20,14 @@ This package is already included in the monorepo and can be referenced in any pr
 
 Collection of variables meant to be shared across multiple packages and applications. The intention of having variables here instead of a .env file is to have a single source of truth for all the variables, and to be able to use TypeScript to ensure that all the variables are defined and have the correct type.
 
-```ts
-import { envVars } from "@packages/shared/envVars";
+Variables are split into public and private. Public variables are prefixed with `NEXT_PUBLIC_` and can be used in the client side code. Private variables are prefix with `NEXT_PRIVATE_` and are only available in the server side code.
 
-console.log(envVars.SOME_ENV_VAR);
+```ts
+import { publicVars } from "@packages/shared/publicVars";
+import { privateVars } from "@packages/shared/privateVars";
+
+console.log(publicVars.SOME_ENV_VAR);
+console.log(privateVars.SOME_PRIVATE_ENV_VAR);
 ```
 
 ## Routes

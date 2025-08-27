@@ -1,10 +1,11 @@
 fragment LandpadItem on Landpad {
-    id
-    full_name
+  id
+  full_name
+  details
 }
 
 query GetLandpadsCatalog($limit: Int) {
-    landpads(limit: $limit) {
-      ...LandpadItem
-    }
+  landpads(limit: $limit) {
+    ...LandpadItem
+  }
 }

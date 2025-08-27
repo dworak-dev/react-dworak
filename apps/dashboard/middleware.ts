@@ -2,7 +2,7 @@ import { dashboardRouteConfigs } from "@packages/shared/routes";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = dashboardRouteConfigs
+const protectedRoutes = Object.values(dashboardRouteConfigs)
   .filter((r) => r.isProtected)
   .map((r) => r.rewrites)
   .flat();

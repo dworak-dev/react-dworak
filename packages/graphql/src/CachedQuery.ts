@@ -1,5 +1,16 @@
+// TODO: Implement some sort of race condition prevention for when two clients
+// request the same data at the same time and the cache is stale. At that moment
+// both clients will fetch the data from the server instead of one waiting for
+// the other to finish and then using the cached data.
 import { GraphQLClient, RequestDocument, Variables } from "graphql-request";
 
+/*
+ * This is a very simple caching mechanism for GraphQL queries.
+ * It caches the result of a query for a specified amount of time (default: 5 minutes).
+ * If the cached data is older than the cache time, it will fetch the data again.
+ * It is by no means a complete cached solution but specially for catalogs it does the job.
+ * dworak.dev
+ */
 export class CachedQuery<T, V extends Variables = Variables> {
   public document: RequestDocument;
   public client: GraphQLClient;

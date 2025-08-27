@@ -26,7 +26,7 @@ export default async ({
   children: React.ReactNode;
 }>) => {
   const { data } = await getData();
-  console.log("data from layout", data.landpads?.length);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -35,6 +35,12 @@ export default async ({
           fontVariables,
         )}
       >
+        <div>
+          <p>Landpads:</p>
+          {data.landpads?.map((e) => (
+            <p key={e?.id}>{e?.full_name}</p>
+          ))}
+        </div>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
