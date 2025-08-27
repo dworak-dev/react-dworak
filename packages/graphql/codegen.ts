@@ -1,5 +1,5 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import { publicVars } from "@packages/shared/publicVars";
+import { publicVars } from "@packages/shared/public-vars";
 
 const config: CodegenConfig = {
   overwrite: true,

@@ -5,7 +5,7 @@ import {
 } from "@packages/graphql";
 import { GraphQLClient } from "graphql-request";
 
-import { CachedQuery } from "./CachedQuery";
+import { CachedQuery } from "./cached-query";
 
 /*
  * All of the cached catalogs that we want to use in the app.

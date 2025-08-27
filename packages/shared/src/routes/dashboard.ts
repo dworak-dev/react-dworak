@@ -1,5 +1,5 @@
-import { publicVars } from "../publicVars";
-import { RouteConfig, RouteConfigParams } from "./RouteConfig";
+import { publicVars } from "../public-vars";
+import { RouteConfig, RouteConfigParams } from "./route-config";
 
 /*
  * Only purpose of extending this class is to set the baseUrl automatically.

@@ -1,2 +1,2 @@
 export * from "./dashboard";
-export * from "./RouteConfig";
+export * from "./route-config";

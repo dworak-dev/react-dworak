@@ -1,4 +1,4 @@
-import { privateVars } from "@packages/shared/privateVars";
+import { privateVars } from "@packages/shared/private-vars";
 import { dashboardRouteConfigs } from "@packages/shared/routes";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";

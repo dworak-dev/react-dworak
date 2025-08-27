@@ -15,9 +15,9 @@
   },
   "exports": {
     ".": "./autogen/graphql.ts",
-    "./CachedQuery": "./src/CachedQuery.ts",
-    "./cachedCatalogs": "./src/cachedCatalogs.ts",
-    "./graphqlClient": "./src/graphqlClient.ts"
+    "./cached-query": "./src/cached-query.ts",
+    "./cached-catalogs": "./src/cached-catalogs.ts",
+    "./grapqhl-client": "./src/graphql-client.ts"
   },
   "private": true,
   "scripts": {
