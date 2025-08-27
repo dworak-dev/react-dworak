@@ -1,6 +1,7 @@
 import "@packages/ui/globals.css";
 import "./globals.css";
 
+import { FaviconIco, FaviconPng, FaviconSvg } from "@packages/assets";
 import { cn } from "@packages/ui/lib/utils";
 import type { Metadata } from "next";
 
@@ -31,6 +32,12 @@ export default async ({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href={FaviconIco.src} sizes="32x32" />
+        <link rel="icon" href={FaviconSvg.src} type="image/svg+xml" />
+        <link rel="apple-touch-icon" href={FaviconPng.src} />
+      </head>
+
       <body
         className={cn(
           "text-foreground group/body overscroll-none font-sans antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]",
