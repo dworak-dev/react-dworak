@@ -23,8 +23,8 @@ Collection of variables meant to be shared across multiple packages and applicat
 Variables are split into public and private. Public variables are prefixed with `NEXT_PUBLIC_` and can be used in the client side code. Private variables are prefix with `NEXT_PRIVATE_` and are only available in the server side code.
 
 ```ts
-import { publicVars } from "@packages/shared/publicVars";
-import { privateVars } from "@packages/shared/privateVars";
+import { publicVars } from "@packages/shared/public-vars";
+import { privateVars } from "@packages/shared/private-vars";
 
 console.log(publicVars.SOME_ENV_VAR);
 console.log(privateVars.SOME_PRIVATE_ENV_VAR);

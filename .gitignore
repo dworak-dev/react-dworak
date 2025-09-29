@@ -39,3 +39,21 @@ yarn-error.log*
 
 # IntelliJ
 .idea/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*backup
+.terraform.tfstate.lock.info
+
+# Terraform cache and provider data
+.terraform/
+
+# Saved plan files (if used)
+*.tfplan
+
+# Sensitive variable definition files
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
