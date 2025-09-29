@@ -36,21 +36,21 @@ The route shared configuration helps with easy renaming, alternate routes and ty
 All routes on all apps should be defined here, they are used for things like navigation, authentication middleware and automatically mapping rewrites in the `next.config.js` file.
 
 ```ts
-import { dashboardChartsRouteConfig } from "@packages/shared/routes";
+import { defaultAppChartsRouteConfig } from "@packages/shared/routes";
 
-<a href={dashboardChartsRouteConfig.getRoute()}>Graficas</a>
+<a href={defaultAppChartsRouteConfig.getRoute()}>Graficas</a>
 ```
 
 ### Adding routes
 
-Each app should have its own route configuration file. And all routes should be added to the file. For example, adding a new route to the dashboard app would be done like this:
+Each app should have its own route configuration file. And all routes should be added to the file. For example, adding a new route to the default app would be done like this:
 
-If the dashboard route configuration file does not exist, create it at `packages/shared/src/routes/dashboard.ts`:
+If the default app route configuration file does not exist, create it at `packages/shared/src/routes/default-app.ts`:
 
 Now add a new route to the file:
 
 ```ts
-export const dashboardStatsRouteConfig = new DashboardRouteConfig(
+export const defaultAppStatsRouteConfig = new DefaultAppRouteConfig(
   "/stats",
   "/estadisticas",
   true,
@@ -61,8 +61,8 @@ export const dashboardStatsRouteConfig = new DashboardRouteConfig(
 All apps route configuration files should export an array with all the routed defined in the file:
 
 ```ts
-export const dashboardRouteConfigs: RouteConfig[] = [
-  dashboardStatsRouteConfig,
-  dashboardChartsRouteConfig,
+export const defaultAppRouteConfigs: RouteConfig[] = [
+  defaultAppStatsRouteConfig,
+  defaultAppChartsRouteConfig,
 ];
 ```

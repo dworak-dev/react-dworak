@@ -1,10 +1,10 @@
 import { privateVars } from "@packages/shared/private-vars";
-import { dashboardRouteConfigs } from "@packages/shared/routes";
+import { defaultAppRouteConfigs } from "@packages/shared/routes";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";
 
 // Routes renames are imported from a shared config and mapped to the Next.js format.
-const mappedRoutes = Object.values(dashboardRouteConfigs)
+const mappedRoutes = Object.values(defaultAppRouteConfigs)
   .map((i) =>
     i.rewrites.map((rewrite) => ({
       source: rewrite,

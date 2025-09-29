@@ -12,10 +12,13 @@ terraform {
       source  = "hashicorp/time"
       version = "~> 0.7.2"
     }
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 3.4"
+    }
   }
   required_version = "1.13.3"
 }
-
 
 provider "azurerm" {
   features {}

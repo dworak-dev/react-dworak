@@ -4,6 +4,6 @@ import { publicVars } from "@packages/shared/public-vars";
 
 const client = getGraphqlClient(publicVars.GRAPHQL_API_URL);
 
-const dashboardCachedCatalogs = getCachedCatalogs(client);
+const defaultAppCachedCatalogs = getCachedCatalogs(client);
 
-export { dashboardCachedCatalogs };
+export { defaultAppCachedCatalogs };

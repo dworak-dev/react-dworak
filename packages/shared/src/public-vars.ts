@@ -6,8 +6,8 @@
  */
 
 export const publicVars = {
-  DASHBOARD_BASE_URL:
-    process.env.NEXT_PUBLIC_DASHBOARD_BASE_URL ?? "http://localhost:3001",
+  DEFAULT_APP_BASE_URL:
+    process.env.NEXT_PUBLIC_DEFAULT_APP_BASE_URL ?? "http://localhost:3001",
   GRAPHQL_API_URL:
     process.env.NEXT_PUBLIC_GRAPHQL_API_URL ??
     "https://spacex-production.up.railway.app/graphql",

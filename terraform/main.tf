@@ -44,6 +44,8 @@ resource "azurerm_linux_web_app" "default_app" {
   location            = azurerm_service_plan.asp.location
   service_plan_id     = azurerm_service_plan.asp.id
 
+  https_only = true
+
   identity {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.puller.id]
@@ -57,6 +59,47 @@ resource "azurerm_linux_web_app" "default_app" {
     }
     container_registry_use_managed_identity       = true
     container_registry_managed_identity_client_id = azurerm_user_assigned_identity.puller.client_id
+
+    # 🔐 deny by default; we'll only ALLOW Cloudflare + expected host below
+    ip_restriction_default_action = "Deny"
+
+    # ✅ Allow rules: Cloudflare IPs AND x-forwarded-host = your custom domain
+    dynamic "ip_restriction" {
+      for_each = local.cloudflare_ip_cidrs
+      content {
+        name       = "allow-cf-${replace(ip_restriction.value, "/[.:]/", "-")}"
+        priority   = 100 + index(local.cloudflare_ip_cidrs, ip_restriction.value)
+        action     = "Allow"
+        ip_address = ip_restriction.value
+
+        #headers {
+        #x_forwarded_host = [
+        #local.default_app_fqdn,
+        #"www.${local.default_app_fqdn}",
+        #]
+        #}
+      }
+    }
+
+    # Do the same for the Kudu/SCM site
+    scm_ip_restriction_default_action = "Deny"
+
+    dynamic "scm_ip_restriction" {
+      for_each = local.cloudflare_ip_cidrs
+      content {
+        name       = "allow-cf-scm-${replace(scm_ip_restriction.value, "/[.:]/", "-")}"
+        priority   = 100 + index(local.cloudflare_ip_cidrs, scm_ip_restriction.value)
+        action     = "Allow"
+        ip_address = scm_ip_restriction.value
+
+        #headers {
+        #x_forwarded_host = [
+        #local.default_app_fqdn,
+        #"www.${local.default_app_fqdn}",
+        #]
+        #}
+      }
+    }
   }
 
   app_settings = {

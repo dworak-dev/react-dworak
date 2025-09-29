@@ -11,8 +11,7 @@ RUN yarn global add turbo@^2
 COPY . .
  
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
-# Assuming "dashboard" is the name entered in the project's package.json: { name: "dashboard" }
-RUN turbo prune dashboard --docker
+RUN turbo prune default-app --docker
  
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -38,11 +37,11 @@ USER nextjs
  
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/dashboard/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/dashboard/.next/static ./apps/dashboard/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/default-app/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/default-app/.next/static ./apps/default-app/.next/static
 # Temporarily disabling copying public folder since there is not one at the moment
-# COPY --from=installer --chown=nextjs:nodejs /app/apps/dashboard/public ./apps/dashboard/public
+# COPY --from=installer --chown=nextjs:nodejs /app/apps/default-app/public ./apps/default-app/public
 
 EXPOSE 3000
  
-CMD ["node", "apps/dashboard/server.js"]
+CMD ["node", "apps/default-app/server.js"]

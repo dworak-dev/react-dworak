@@ -6,7 +6,7 @@ import { RouteConfig, RouteConfigParams } from "./route-config";
  * This way, we don't have to set it manually for each route.
  * dworak.dev
  */
-export class DashboardRouteConfig extends RouteConfig {
+export class DefaultAppRouteConfig extends RouteConfig {
   constructor({
     original,
     rewrite,
@@ -17,7 +17,7 @@ export class DashboardRouteConfig extends RouteConfig {
     super({
       original,
       rewrite,
-      baseUrl: publicVars.DASHBOARD_BASE_URL,
+      baseUrl: publicVars.DEFAULT_APP_BASE_URL,
       isProtected,
       additionalRewrites,
       sitemapConfig,
@@ -25,7 +25,7 @@ export class DashboardRouteConfig extends RouteConfig {
   }
 }
 
-const stats = new DashboardRouteConfig({
+const stats = new DefaultAppRouteConfig({
   original: "/stats",
   rewrite: "/estadisticas",
   isProtected: true,
@@ -37,7 +37,7 @@ const stats = new DashboardRouteConfig({
   },
 });
 
-const charts = new DashboardRouteConfig({
+const charts = new DefaultAppRouteConfig({
   original: "/charts",
   rewrite: "/graficas",
   isProtected: false,
@@ -48,7 +48,7 @@ const charts = new DashboardRouteConfig({
   },
 });
 
-export const dashboardRouteConfigs = {
+export const defaultAppRouteConfigs = {
   stats,
   charts,
 };

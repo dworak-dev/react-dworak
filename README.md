@@ -16,7 +16,7 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `dashbaord`: a [Next.js](https://nextjs.org/) app
+- `default-app`: a [Next.js](https://nextjs.org/) app
 - `@packages/ui`: a stub React component library shared by both `web` and `docs` applications
 - `@packages/eslint`: `eslint` configurations
 - `@packages/typescript-config`: `tsconfig.json`s used throughout the monorepo

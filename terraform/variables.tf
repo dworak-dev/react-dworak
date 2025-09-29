@@ -47,11 +47,11 @@ variable "default_app_domain" {
 variable "default_app_subdomain" {
   description = "The subdomain for the default web application"
   type        = string
-  default     = "default5"
+  default     = "default6"
 }
 
 variable "default_app_image_name" {
-  description = "The Docker image for the dashboard application"
+  description = "The Docker image for the default application"
   type        = string
   default     = "default:latest"
 }
