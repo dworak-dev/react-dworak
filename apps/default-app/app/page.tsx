@@ -27,7 +27,7 @@ export default () => {
   const { setTheme } = useTheme();
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative">
+    <div className="min-h-screen flex items-center justify-center px-4 relative flex flex-col gap-8">
       <Button
         onClick={() => {
           throw new Error("This is a test error");
@@ -35,7 +35,6 @@ export default () => {
       >
         Sentry.js Test Error
       </Button>
-
       <Image width={100} height={100} src={BlueCircle} alt="popo"></Image>
       <div
         style={{
@@ -44,7 +43,6 @@ export default () => {
           backgroundImage: `url(${RedCircle.src})`,
         }}
       ></div>
-
       <div className="absolute top-4 right-4 z-10">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -114,6 +112,9 @@ export default () => {
           </Button>
         </CardFooter>
       </Card>
+      {/* x-release-please-start-version */}
+      <span>V1.0.5</span>
+      {/* x-release-please-end */}
     </div>
   );
 };

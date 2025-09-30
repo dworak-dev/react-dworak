@@ -8,8 +8,8 @@
     "@graphql-codegen/cli": "5.0.7",
     "@graphql-codegen/client-preset": "4.8.3",
     "@graphql-codegen/introspection": "4.0.3",
-    "@packages/eslint": "*",
-    "@packages/typescript": "*",
+    "@packages/eslint": "1.0.0",
+    "@packages/typescript": "1.0.0",
     "graphql": "^16.11.0",
     "typescript": "5.8.3"
   },

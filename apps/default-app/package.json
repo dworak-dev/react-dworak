@@ -2,10 +2,10 @@
   "name": "default-app",
   "version": "1.0.0",
   "dependencies": {
-    "@packages/assets": "*",
-    "@packages/graphql": "*",
-    "@packages/shared": "*",
-    "@packages/ui": "*",
+    "@packages/assets": "1.0.0",
+    "@packages/graphql": "1.0.0",
+    "@packages/shared": "1.0.0",
+    "@packages/ui": "1.0.0",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
@@ -25,8 +25,8 @@
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "@packages/eslint": "*",
-    "@packages/typescript": "*",
+    "@packages/eslint": "1.0.0",
+    "@packages/typescript": "1.0.0",
     "@types/node": "^22.15.3",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",

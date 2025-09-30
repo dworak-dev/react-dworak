@@ -1,0 +1,66 @@
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+name: CI
+
+# Avoid duplicate runs on the same branch
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Monorepo checks
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+      TURBO_CACHE_DIR: .turbo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js (v22) with Yarn cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          check-latest: true
+          cache: 'yarn'
+
+      # Ensure the exact Yarn version declared in package.json
+      - name: Install Yarn 1.x
+        run: npm i -g yarn@1.22.22
+
+      - name: Restore Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/yarn.lock', 'turbo.json', '**/tsconfig.json') }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # --- project hygiene checks ---
+      - name: Syncpack mismatches
+        run: yarn syncpack:mismatch
+
+      - name: Unused/invalid deps (depcheck)
+        run: yarn depcheck
+
+      # --- code quality & type safety ---
+      - name: Lint
+        run: yarn lint
+
+      - name: Type check
+        run: yarn check-types
+
+      # --- build (uses Turborepo) ---
+      - name: Build
+        run: yarn build

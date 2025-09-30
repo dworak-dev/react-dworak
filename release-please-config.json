@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "include-component-in-tag": true,
+  "plugins": [
+    "node-workspace"
+  ],
+  "packages": {
+    "apps/default-app": {
+      "extra-files": [
+        "app/page.tsx"
+      ],
+      "release-type": "node"
+    },
+    "packages/assets": {
+      "release-type": "node"
+    },
+    "packages/eslint": {
+      "release-type": "node"
+    },
+    "packages/graphql": {
+      "release-type": "node"
+    },
+    "packages/shared": {
+      "release-type": "node"
+    },
+    "packages/typescript": {
+      "release-type": "node"
+    },
+    "packages/ui": {
+      "release-type": "node"
+    },
+    ".": {
+      "release-type": "node"
+    }
+  }
+}

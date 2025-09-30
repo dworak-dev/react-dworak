@@ -1,0 +1,10 @@
+{
+  "apps/default-app": "1.0.0",
+  "packages/assets": "1.0.0",
+  "packages/eslint": "1.0.0",
+  "packages/graphql": "1.0.0",
+  "packages/shared": "1.0.0",
+  "packages/typescript": "1.0.0",
+  "packages/ui": "1.0.0",
+  ".": "1.0.0"
+}

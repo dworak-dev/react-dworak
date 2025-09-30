@@ -2,8 +2,8 @@
   "name": "@packages/assets",
   "version": "1.0.0",
   "devDependencies": {
-    "@packages/eslint": "*",
-    "@packages/typescript": "*"
+    "@packages/eslint": "1.0.0",
+    "@packages/typescript": "1.0.0"
   },
   "exports": {
     ".": "./src/index.ts"
