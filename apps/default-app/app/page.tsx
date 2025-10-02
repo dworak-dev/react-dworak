@@ -138,7 +138,7 @@ export default () => {
         </CardFooter>
       </Card>
       {/* x-release-please-start-version */}
-      <span>V1.4.23</span>
+      <span>V1.1.0</span>
       {/* x-release-please-end */}
     </div>
   );
