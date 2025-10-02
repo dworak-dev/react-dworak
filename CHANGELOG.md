@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.1.0...react-dworak-1.1.1) (2025-10-02)
+
+
+### Bug Fixes
+
+* sentry variable son terraform and sentry deploy minor issues ([64adf58](https://github.com/dworak-dev/react-dworak/commit/64adf58b2a2b537f1ffb3bc33d65c3e2db804b6d))
+
 ## [1.1.0](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.0.0...react-dworak-1.1.0) (2025-10-02)
 
 
