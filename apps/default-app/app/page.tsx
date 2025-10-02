@@ -54,7 +54,13 @@ export default () => {
     <div className="min-h-screen flex items-center justify-center px-4 relative flex flex-col gap-8">
       <Button
         onClick={() => {
-          throw new Error("This is a test error");
+          {
+            /* x-release-please-start-version */
+          }
+          throw new Error("This is a test error V1.1.0");
+          {
+            /* x-release-please-end */
+          }
         }}
       >
         Sentry.js Test Error

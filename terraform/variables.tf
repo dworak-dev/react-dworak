@@ -59,3 +59,19 @@ variable "github_repo" {
   description = "Repository name (without owner)"
   type        = string
 }
+
+variable "sentry_auth_token" {
+  description = "Sentry Auth Token with 'project:write' scope"
+  type        = string
+  sensitive   = true
+}
+
+variable "sentry_org" {
+  description = "Sentry organization slug"
+  type        = string
+}
+
+variable "sentry_project" {
+  description = "Sentry project slug"
+  type        = string
+}

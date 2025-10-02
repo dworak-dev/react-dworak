@@ -43,4 +43,26 @@ resource "github_actions_environment_variable" "docker_image" {
   value         = each.key
 }
 
+# Set repository variable for sentry organization
+resource "github_actions_variable" "sentry_org" {
+  repository    = data.github_repository.repo.name
+  variable_name = "SENTRY_ORG"
+  value         = var.sentry_org
+}
+
+# Set repository variable for sentry project
+resource "github_actions_variable" "sentry_project" {
+  repository    = data.github_repository.repo.name
+  variable_name = "SENTRY_PROJECT"
+  value         = var.sentry_project
+}
+
+# set repository secret for sentry auth token
+resource "github_actions_secret" "sentry_auth_token" {
+  repository      = var.github_repo
+  secret_name     = "SENTRY_AUTH_TOKEN"
+  plaintext_value = var.sentry_auth_token
+}
+
+
 

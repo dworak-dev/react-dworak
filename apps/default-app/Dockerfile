@@ -52,9 +52,7 @@ RUN --mount=type=secret,id=sentry_auth_token \
   SENTRY_ENV="$SENTRY_ENV" \
   SENTRY_DIST="$SENTRY_DIST" \
   yarn turbo run build && \
-  sentry-cli releases new "$SENTRY_RELEASE" && \
-  sentry-cli releases finalize "$SENTRY_RELEASE" && \
-  sentry-cli releases deploys "$SENTRY_RELEASE" new -e "$SENTRY_ENV"
+  sentry-cli releases deploys "$SENTRY_RELEASE-$SENTRY_DIST" new -e "$SENTRY_ENV"
 
 FROM base AS runner
 WORKDIR /app

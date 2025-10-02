@@ -22,18 +22,19 @@ resource "azurerm_linux_web_app" "default_app" {
     container_registry_use_managed_identity       = true
     container_registry_managed_identity_client_id = azurerm_user_assigned_identity.puller.client_id
 
-    ip_restriction_default_action = "Deny"
-    dynamic "ip_restriction" {
-      for_each = local.cloudflare_ip_cidrs
-      content {
-        name       = "allow-cf-${replace(ip_restriction.value, "/[.:]/", "-")}"
-        priority   = 100 + index(local.cloudflare_ip_cidrs, ip_restriction.value)
-        action     = "Allow"
-        ip_address = ip_restriction.value
-
-        // TODO: add header based restrictions (previously existed, search in repo)
-      }
-    }
+    // TODO: re apply these settings after solving the cloudflare proxying issue
+    # ip_restriction_default_action = "Deny"
+    # dynamic "ip_restriction" {
+    #   for_each = local.cloudflare_ip_cidrs
+    #   content {
+    #     name       = "allow-cf-${replace(ip_restriction.value, "/[.:]/", "-")}"
+    #     priority   = 100 + index(local.cloudflare_ip_cidrs, ip_restriction.value)
+    #     action     = "Allow"
+    #     ip_address = ip_restriction.value
+    #
+    #     // TODO: add header based restrictions (previously existed, search in repo)
+    #   }
+    # }
 
     // TODO: add scm ip restrictions (previously existed, search in repo)
   }
