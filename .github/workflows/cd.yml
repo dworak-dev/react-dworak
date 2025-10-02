@@ -1,0 +1,55 @@
+name: cd
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  default-app-build-and-push-staging:
+    if: contains(github.event.release.name, 'default-app')
+    environment: staging
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for Azure OIDC login
+
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      TAG: ${{ github.ref_type == 'tag' && github.ref_name || github.event.release.tag_name || github.sha }}
+
+    steps:
+      - name: Extract name and version
+        shell: bash
+        run: |
+          RAW_TAG="$TAG"
+          NAME="${RAW_TAG%-*}"        # strip after last '-'
+          VERSION="${RAW_TAG##*-}"    # take text after last '-'
+          VERSION="${VERSION#v}" 
+          echo "NAME=$NAME" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Log in to ACR
+        run: az acr login --name "${{ vars.ACR_NAME }}"
+
+      - name: Build and Push
+        run: |
+          docker buildx build \
+            --file apps/default-app/Dockerfile \
+            --tag "${{vars.ACR_LOGIN_SERVER}}/${{ vars.DOCKER_IMAGE_NAME }}:$VERSION" \
+            --tag "${{vars.ACR_LOGIN_SERVER}}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}" \
+            --push \
+            --build-arg SENTRY_ORG="${{ vars.SENTRY_ORG }}" \
+            --build-arg SENTRY_PROJECT="${{ vars.SENTRY_PROJECT }}" \
+            --build-arg SENTRY_RELEASE="$NAME" \
+            --build-arg SENTRY_DIST="$VERSION" \
+            --build-arg SENTRY_ENV="staging" \
+            --secret id=sentry_auth_token,env=SENTRY_AUTH_TOKEN \
+            .

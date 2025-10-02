@@ -1,6 +1,7 @@
 "use client";
 
 import { BlueCircle, RedCircle } from "@packages/assets";
+import { LandpadItemFragment } from "@packages/graphql";
 import { Button } from "@packages/ui/components/button";
 import {
   Card,
@@ -22,9 +23,32 @@ import { Label } from "@packages/ui/components/label";
 import { Moon, Sun } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
+import { defaultAppCachedCatalogs } from "./cached-catalogs";
 
 export default () => {
   const { setTheme } = useTheme();
+
+  const [data, setData] = useState<LandpadItemFragment[]>([]);
+
+  const fetchData = async () => {
+    const response =
+      await defaultAppCachedCatalogs.landpadsCachedQuery.getData();
+
+    const landpads: LandpadItemFragment[] = [];
+    if (response.landpads) {
+      response.landpads.forEach((landpad) => {
+        if (landpad) landpads.push(landpad);
+      });
+
+      setData(landpads);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 relative flex flex-col gap-8">
@@ -35,6 +59,7 @@ export default () => {
       >
         Sentry.js Test Error
       </Button>
+      {!data ? "Loading" : `Landpads: ${data.length}`}
       <Image width={100} height={100} src={BlueCircle} alt="popo"></Image>
       <div
         style={{
@@ -113,7 +138,7 @@ export default () => {
         </CardFooter>
       </Card>
       {/* x-release-please-start-version */}
-      <span>V1.0.5</span>
+      <span>V1.4.23</span>
       {/* x-release-please-end */}
     </div>
   );

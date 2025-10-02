@@ -15,12 +15,6 @@ variable "project_name" {
   default     = "dworak"
 }
 
-variable "environment" {
-  description = "The environment for the deployment (e.g., dev, staging, prod)"
-  type        = string
-  default     = "dev"
-}
-
 variable "location" {
   description = "The Azure region where resources will be deployed"
   type        = string
@@ -35,7 +29,7 @@ variable "subscription_id" {
 variable "default_app_name" {
   description = "The name of the default web application"
   type        = string
-  default     = "default"
+  default     = "default-app"
 }
 
 variable "default_app_domain" {
@@ -47,11 +41,21 @@ variable "default_app_domain" {
 variable "default_app_subdomain" {
   description = "The subdomain for the default web application"
   type        = string
-  default     = "default6"
+  default     = "default"
 }
 
-variable "default_app_image_name" {
-  description = "The Docker image for the default application"
+variable "github_token" {
+  description = "GitHub PAT with 'repo' scope (and 'admin:org' if using org secrets)"
   type        = string
-  default     = "default:latest"
+  sensitive   = true
+}
+
+variable "github_owner" {
+  description = "GitHub user or org name (owner of the repo)"
+  type        = string
+}
+
+variable "github_repo" {
+  description = "Repository name (without owner)"
+  type        = string
 }

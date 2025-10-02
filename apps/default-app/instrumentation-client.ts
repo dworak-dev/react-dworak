@@ -6,7 +6,8 @@ import { publicVars } from "@packages/shared/public-vars";
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
-  dsn: publicVars.SENTRY_JS_DSN,
+  dsn: publicVars.SENTRY_DSN,
+  environment: publicVars.SENTRY_ENVIRONMENT,
 
   // Add optional integrations for additional features
   integrations: [Sentry.replayIntegration()],

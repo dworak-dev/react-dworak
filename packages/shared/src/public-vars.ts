@@ -11,8 +11,9 @@ export const publicVars = {
   GRAPHQL_API_URL:
     process.env.NEXT_PUBLIC_GRAPHQL_API_URL ??
     "https://spacex-production.up.railway.app/graphql",
-  SENTRY_JS_DSN:
-    process.env.NEXT_PUBLIC_SENTRY_JS_DSN ??
+  SENTRY_DSN:
+    process.env.NEXT_PUBLIC_SENTRY_DSN ??
     // eslint-disable-next-line no-secrets/no-secrets
     "https://014d00c260f541d6adf70d6870fd4b8b@o4509895725350912.ingest.us.sentry.io/4509895728693248",
+  SENTRY_ENVIRONMENT: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT ?? "local",
 };

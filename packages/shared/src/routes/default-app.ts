@@ -25,6 +25,8 @@ export class DefaultAppRouteConfig extends RouteConfig {
   }
 }
 
+// TODO: add base route
+
 const stats = new DefaultAppRouteConfig({
   original: "/stats",
   rewrite: "/estadisticas",

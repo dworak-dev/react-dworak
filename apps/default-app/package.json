@@ -44,5 +44,6 @@
     "lint:fix": "next lint --fix",
     "start": "next start"
   },
-  "type": "module"
+  "type": "module",
+  "packageManager": "yarn@1.22.22"
 }

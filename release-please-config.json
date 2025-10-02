@@ -4,6 +4,8 @@
   "plugins": [
     "node-workspace"
   ],
+  "include-v-in-tag": false,
+  "tag-separator": "-",
   "packages": {
     "apps/default-app": {
       "extra-files": [

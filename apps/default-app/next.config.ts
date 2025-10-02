@@ -1,4 +1,3 @@
-import { privateVars } from "@packages/shared/private-vars";
 import { defaultAppRouteConfigs } from "@packages/shared/routes";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";
@@ -15,6 +14,7 @@ const mappedRoutes = Object.values(defaultAppRouteConfigs)
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  productionBrowserSourceMaps: true,
   async rewrites() {
     // You might want to add more rewrites in here.
 
@@ -26,12 +26,24 @@ const withSentryNextConfig = withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: privateVars.SENTRY_JS_ORG,
+  // These values are used to upload source maps to Sentry.
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  org: process.env.SENTRY_ORG,
+  release: {
+    create: true,
+    finalize: true,
+    name: `${process.env.SENTRY_RELEASE}-${process.env.SENTRY_DIST}`,
+    dist: process.env.SENTRY_DIST,
+  },
+  project: process.env.SENTRY_PROJECT,
 
-  project: privateVars.SENTRY_JS_PROJECT,
+  sourcemaps: {
+    disable: false, // Source maps are enabled by default
+    ignore: ["**/node_modules/**"], // Files to exclude
+    deleteSourcemapsAfterUpload: true, // Security: delete after upload
+  },
 
-  // Only print logs for uploading source maps in CI
-  silent: !process.env.CI,
+  silent: false,
 
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
@@ -43,10 +55,7 @@ const withSentryNextConfig = withSentryConfig(nextConfig, {
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: `/${privateVars.SENTRY_JS_METRICS_PATH}`,
-
-  // This token is used to upload source maps to Sentry.
-  authToken: privateVars.SENTRY_AUTH_TOKEN,
+  tunnelRoute: `/mtr`,
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
