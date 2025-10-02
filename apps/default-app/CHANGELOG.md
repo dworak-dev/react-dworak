@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.2](https://github.com/dworak-dev/react-dworak/compare/default-app-1.1.1...default-app-1.1.2) (2025-10-02)
+
+
+### Bug Fixes
+
+* changed some env vars from public to private ([9757b7c](https://github.com/dworak-dev/react-dworak/commit/9757b7c1410dafe8c6480c208e2005e3449ca765))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @packages/shared bumped from 1.1.0 to 1.1.1
+
 ## [1.1.1](https://github.com/dworak-dev/react-dworak/compare/default-app-1.1.0...default-app-1.1.1) (2025-10-02)
 
 
