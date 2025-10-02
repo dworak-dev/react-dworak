@@ -5,4 +5,11 @@
  * dworak.dev
  */
 
-export const privateVars = {};
+export const privateVars = {
+  SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
+  SENTRY_ORG: process.env.SENTRY_ORG,
+  SENTRY_PROJECT: process.env.SENTRY_PROJECT,
+  SENTRY_RELEASE: process.env.SENTRY_RELEASE,
+  SENTRY_DIST: process.env.SENTRY_DIST,
+  SENTRY_ENV: process.env.SENTRY_ENV ?? "local",
+};

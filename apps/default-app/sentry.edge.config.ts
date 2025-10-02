@@ -3,12 +3,13 @@
 // Note that this config is unrelated to the Vercel Edge Runtime and is also required when running locally.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
+import { privateVars } from "@packages/shared/private-vars";
 import { publicVars } from "@packages/shared/public-vars";
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
   dsn: publicVars.SENTRY_DSN,
-  environment: publicVars.SENTRY_ENVIRONMENT,
+  environment: privateVars.SENTRY_ENV,
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,

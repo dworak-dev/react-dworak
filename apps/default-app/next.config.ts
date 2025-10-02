@@ -1,3 +1,4 @@
+import { privateVars } from "@packages/shared/private-vars";
 import { defaultAppRouteConfigs } from "@packages/shared/routes";
 import { withSentryConfig } from "@sentry/nextjs";
 import { NextConfig } from "next";
@@ -27,15 +28,15 @@ const withSentryNextConfig = withSentryConfig(nextConfig, {
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
   // These values are used to upload source maps to Sentry.
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  org: process.env.SENTRY_ORG,
+  authToken: privateVars.SENTRY_AUTH_TOKEN,
+  org: privateVars.SENTRY_ORG,
   release: {
     create: true,
     finalize: true,
-    name: `${process.env.SENTRY_RELEASE}-${process.env.SENTRY_DIST}`,
-    dist: process.env.SENTRY_DIST,
+    name: `${privateVars.SENTRY_RELEASE}-${privateVars.SENTRY_DIST}`,
+    dist: privateVars.SENTRY_DIST,
   },
-  project: process.env.SENTRY_PROJECT,
+  project: privateVars.SENTRY_PROJECT,
 
   sourcemaps: {
     disable: false, // Source maps are enabled by default
