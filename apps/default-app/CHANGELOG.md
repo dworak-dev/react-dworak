@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.1](https://github.com/dworak-dev/react-dworak/compare/default-app-1.1.0...default-app-1.1.1) (2025-10-02)
+
+
+### Bug Fixes
+
+* sentry variable son terraform and sentry deploy minor issues ([64adf58](https://github.com/dworak-dev/react-dworak/commit/64adf58b2a2b537f1ffb3bc33d65c3e2db804b6d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @packages/assets bumped from 1.1.0 to 1.1.1
+
 ## [1.1.0](https://github.com/dworak-dev/react-dworak/compare/default-app-1.0.0...default-app-1.1.0) (2025-10-02)
 
 
