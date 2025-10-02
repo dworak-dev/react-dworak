@@ -41,7 +41,8 @@ resource "azurerm_linux_web_app" "default_app" {
 
   app_settings = {
     # "DOCKER_ENABLE_CI"   = "true"
-    "NEXT_PUBLIC_SENTRY_ENVIRONMENT" = each.key
+    "SENTRY_ENV"             = each.key
+    "NEXT_PUBLIC_SENTRY_ENV" = each.key
   }
 }
 

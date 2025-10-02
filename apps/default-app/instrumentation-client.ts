@@ -2,13 +2,15 @@
 // The added config here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import { privateVars } from "@packages/shared/private-vars";
 import { publicVars } from "@packages/shared/public-vars";
 import * as Sentry from "@sentry/nextjs";
 
+const sentryEnv =
+  process.env.NEXT_PUBLIC_SENTRY_ENV ?? process.env.SENTRY_ENV ?? "local";
+
 Sentry.init({
   dsn: publicVars.SENTRY_DSN,
-  environment: privateVars.SENTRY_ENV,
+  environment: sentryEnv,
 
   // Add optional integrations for additional features
   integrations: [Sentry.replayIntegration()],

@@ -5,6 +5,8 @@ ARG SENTRY_PROJECT
 ARG SENTRY_RELEASE
 ARG SENTRY_DIST
 ARG SENTRY_ENV
+ENV SENTRY_ENV=${SENTRY_ENV}
+ENV NEXT_PUBLIC_SENTRY_ENV=${SENTRY_ENV}
 
 FROM base AS builder
 RUN apk update
@@ -27,6 +29,8 @@ ARG SENTRY_PROJECT
 ARG SENTRY_RELEASE
 ARG SENTRY_DIST
 ARG SENTRY_ENV
+ENV SENTRY_ENV=${SENTRY_ENV}
+ENV NEXT_PUBLIC_SENTRY_ENV=${SENTRY_ENV}
 
 RUN apk update
 RUN apk add --no-cache libc6-compat
@@ -41,6 +45,8 @@ COPY --from=builder /app/out/full/ .
 
 # install sentry cli globally with yarn:
 RUN yarn global add @sentry/cli
+
+RUN echo "SENTRY_ENV: $SENTRY_ENV"
 
 # RUN yarn turbo run build
 RUN --mount=type=secret,id=sentry_auth_token \

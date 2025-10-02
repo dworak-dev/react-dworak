@@ -13,3 +13,5 @@ export const privateVars = {
   SENTRY_DIST: process.env.SENTRY_DIST,
   SENTRY_ENV: process.env.SENTRY_ENV ?? "local",
 };
+
+console.log("debugging: ", privateVars);

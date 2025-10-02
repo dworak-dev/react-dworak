@@ -2,13 +2,15 @@
 // The config you add here will be used whenever the server handles a request.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import { privateVars } from "@packages/shared/private-vars";
 import { publicVars } from "@packages/shared/public-vars";
 import * as Sentry from "@sentry/nextjs";
 
+const sentryEnv =
+  process.env.NEXT_PUBLIC_SENTRY_ENV ?? process.env.SENTRY_ENV ?? "local";
+
 Sentry.init({
   dsn: publicVars.SENTRY_DSN,
-  environment: privateVars.SENTRY_ENV,
+  environment: sentryEnv,
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
