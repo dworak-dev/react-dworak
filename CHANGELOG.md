@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.1.2...react-dworak-1.1.3) (2025-10-02)
+
+
+### Bug Fixes
+
+* docker enviironment variables persistance ([d763a3b](https://github.com/dworak-dev/react-dworak/commit/d763a3b7762aaa5b9f974f55fc4bc39a31ac8c10))
+
 ## [1.1.2](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.1.1...react-dworak-1.1.2) (2025-10-02)
 
 
