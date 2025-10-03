@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/dworak-dev/react-dworak/compare/assets-1.1.3...assets-1.1.4) (2025-10-03)
+
+
+### Bug Fixes
+
+* color ([9362233](https://github.com/dworak-dev/react-dworak/commit/9362233ee33c9bbe165b58d0919cc51297a524c7))
+
 ## [1.1.3](https://github.com/dworak-dev/react-dworak/compare/assets-1.1.2...assets-1.1.3) (2025-10-03)
 
 

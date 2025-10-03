@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.7](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.6...react-dworak-1.2.7) (2025-10-03)
+
+
+### Bug Fixes
+
+* color ([9362233](https://github.com/dworak-dev/react-dworak/commit/9362233ee33c9bbe165b58d0919cc51297a524c7))
+
 ## [1.2.6](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.5...react-dworak-1.2.6) (2025-10-03)
 
 
