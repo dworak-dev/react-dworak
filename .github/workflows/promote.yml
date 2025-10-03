@@ -1,0 +1,44 @@
+name: promote-image
+
+on:
+  workflow_call:
+    inputs:
+      source_tag:
+        description: "Tag to promote from (e.g. 1.2.3)"
+        type: string
+        required: true
+      environment:
+        description: "GitHub environment to target"
+        type: string
+        required: true
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      SENTRY_AUTH_TOKEN:
+        required: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: login-azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: login-acr
+        run: az acr login --name "${{ vars.ACR_NAME }}"
+
+      - name: retag-and-push
+        run: |
+          skopeo copy \
+            --src-tls-verify=false \
+            --dest-tls-verify=false \
+            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ inputs.source_tag }}" \
+            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}"
+
+      - name: sentry-deployment
+        uses: getsentry/action-release@v1
+        with:
+          environment: ${{ inputs.environment }}
