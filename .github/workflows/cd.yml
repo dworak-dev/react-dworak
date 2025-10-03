@@ -4,16 +4,10 @@ on:
   release:
     types: [published]
 
-env: # global, simple stuff
-  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+env:
   TAG: ${{ github.ref_type == 'tag' && github.ref_name || github.event.release.tag_name || github.sha }}
 
-  ACR_LOGIN_SERVER: ${{ vars.ACR_LOGIN_SERVER }}
-  ACR_NAME: ${{ vars.ACR_NAME }}
-
-  DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
-  DOCKER_IMAGE_TAG: ${{ vars.DOCKER_IMAGE_TAG }}
-
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
   SENTRY_ORG: ${{ vars.SENTRY_ORG }}
   SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
 
@@ -34,7 +28,6 @@ jobs:
           VERSION="${RAW_TAG##*-}"           # after last '-'
           VERSION="${VERSION#v}"             # drop leading 'v'
           SHORT_SHA="${GITHUB_SHA::7}"
-
           {
             echo "raw_tag=$RAW_TAG"
             echo "name=$NAME"
@@ -56,31 +49,32 @@ jobs:
       NAME: ${{ needs.prepare.outputs.name }}
       VERSION: ${{ needs.prepare.outputs.version }}
       SHORT_SHA: ${{ needs.prepare.outputs.short_sha }}
+      SENTRY_RELEASE: ${{ needs.prepare.outputs.raw_tag }}
 
     steps:
-      - name: Checkout
+      - name: checkout-repository
         uses: actions/checkout@v4
 
-      - name: Azure login (OIDC)
+      - name: azure-login
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Log in to ACR
-        run: az acr login --name "$ACR_NAME"
+      - name: acr-login
+        run: az acr login --name "${{ vars.ACR_NAME }}"
 
-      - name: Setup Node.js (v22) with Yarn cache
+      - name: install-node
         uses: actions/setup-node@v4
         with:
           node-version: "22.x"
           check-latest: true
           cache: "yarn"
 
-      # Ensure the exact Yarn version declared in package.json
-      - name: Install Yarn 1.x
+      - name: install-yarn
+        # Install the same version as the main package.json
         run: npm i -g yarn@1.22.22
 
-      - name: Restore Turbo cache
+      - name: restore-turbo-cache
         uses: actions/cache@v4
         with:
           path: .turbo
@@ -88,28 +82,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
 
-      - name: Install dependencies
+      - name: install-dependencies
         run: yarn install --frozen-lockfile
 
-      # --- build (uses Turborepo) ---
-      - name: Build
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
-          SENTRY_RELEASE: ${{ needs.prepare.outputs.raw_tag }}
+      - name: build
         run: yarn build
 
       - name: Build and Push
         run: |
           docker buildx build \
             --file apps/default-app/Dockerfile \
-            --tag "${{vars.ACR_LOGIN_SERVER}}/${{ vars.DOCKER_IMAGE_NAME }}:$VERSION" \
-            --tag "${{vars.ACR_LOGIN_SERVER}}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}" \
-            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${SHORT_SHA}" \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$VERSION" \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}" \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$SHORT_SHA" \
             --push \
-            --build-arg SENTRY_ORG="$SENTRY_ORG" \
-            --build-arg SENTRY_PROJECT="$SENTRY_PROJECT" \
-            --build-arg SENTRY_RELEASE="$RAW_TAG" \
-            --secret id=sentry_auth_token,env=SENTRY_AUTH_TOKEN \
             .

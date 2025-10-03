@@ -10,26 +10,22 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
-
-    env:
-      TURBO_CACHE_DIR: .turbo
-
     steps:
-      - name: Checkout repo
+      - name: checkout-repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (v22) with Yarn cache
+      - name: setup-node
         uses: actions/setup-node@v4
         with:
           node-version: "22.x"
           check-latest: true
           cache: "yarn"
 
-      # Ensure the exact Yarn version declared in package.json
-      - name: Install Yarn 1.x
+      - name: install-yarn
+        # Install the same version as the main package.json
         run: npm i -g yarn@1.22.22
 
-      - name: Restore Turbo cache
+      - name: restore-turbo-cache
         uses: actions/cache@v4
         with:
           path: .turbo
@@ -37,23 +33,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
 
-      - name: Install dependencies
+      - name: install-dependencies
         run: yarn install --frozen-lockfile
 
-      # --- project hygiene checks ---
-      - name: Syncpack mismatches
+      - name: check-package-versions
         run: yarn syncpack:mismatch
 
-      - name: Unused/invalid deps (depcheck)
+      - name: check-depcheck
         run: yarn depcheck
 
-      # --- code quality & type safety ---
-      - name: Lint
+      - name: check-lint
         run: yarn lint
 
-      - name: Type check
+      - name: check-types
         run: yarn check-types
 
-      # --- build (uses Turborepo) ---
-      - name: Build
+      - name: build
         run: yarn build
