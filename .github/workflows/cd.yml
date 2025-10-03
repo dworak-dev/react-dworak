@@ -97,3 +97,8 @@ jobs:
             --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$SHORT_SHA" \
             --push \
             .
+
+      - name: sentry-deployment
+        uses: getsentry/action-release@v1
+        with:
+          environment: staging
