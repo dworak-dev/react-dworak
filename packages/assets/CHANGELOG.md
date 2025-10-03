@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/dworak-dev/react-dworak/compare/assets-1.1.4...assets-1.1.5) (2025-10-03)
+
+
+### Bug Fixes
+
+* promote docker image without pulling ([dbd4565](https://github.com/dworak-dev/react-dworak/commit/dbd45655dd7b42edd5235234e016c8444bff819f))
+
 ## [1.1.4](https://github.com/dworak-dev/react-dworak/compare/assets-1.1.3...assets-1.1.4) (2025-10-03)
 
 
