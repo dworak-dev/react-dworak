@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.3...react-dworak-1.2.4) (2025-10-03)
+
+
+### Bug Fixes
+
+* simplify docker ([3d75900](https://github.com/dworak-dev/react-dworak/commit/3d759009690ce56d5ea59f60af3db9d2ecb69792))
+
 ## [1.2.3](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.2...react-dworak-1.2.3) (2025-10-03)
 
 
