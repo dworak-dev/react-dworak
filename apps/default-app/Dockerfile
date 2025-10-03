@@ -32,7 +32,7 @@ COPY --from=builder /app/out/full/ .
 # install sentry cli globally with yarn:
 RUN yarn global add @sentry/cli
 
-# Sentry environment variables needed in build time for deploying releases and uploading source maps
+# Sentry environment variables needed in build time for deploying releases and uploading source maps.
 ARG SENTRY_ORG
 ARG SENTRY_PROJECT
 ARG SENTRY_RELEASE
