@@ -57,7 +57,7 @@ export default () => {
           {
             /* x-release-please-start-version */
           }
-          throw new Error("This is a test error V1.2.9");
+          throw new Error("This is a test error V1.2.10");
           {
             /* x-release-please-end */
           }
@@ -144,7 +144,7 @@ export default () => {
         </CardFooter>
       </Card>
       {/* x-release-please-start-version */}
-      <span>V1.2.9</span>
+      <span>V1.2.10</span>
       {/* x-release-please-end */}
     </div>
   );

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.12](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.11...react-dworak-1.2.12) (2025-10-03)
+
+
+### Bug Fixes
+
+* deployment ([#20](https://github.com/dworak-dev/react-dworak/issues/20)) ([8b0f7d2](https://github.com/dworak-dev/react-dworak/commit/8b0f7d293cad224e21e97a7d466e9754796f2a5d))
+
 ## [1.2.11](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.10...react-dworak-1.2.11) (2025-10-03)
 
 
