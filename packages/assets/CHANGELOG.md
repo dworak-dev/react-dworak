@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/dworak-dev/react-dworak/compare/assets-1.1.1...assets-1.1.2) (2025-10-03)
+
+
+### Bug Fixes
+
+* red circle ([bbf9cb4](https://github.com/dworak-dev/react-dworak/commit/bbf9cb46064277c2d530cee419aed2d0331ce9df))
+
 ## [1.1.1](https://github.com/dworak-dev/react-dworak/compare/assets-1.1.0...assets-1.1.1) (2025-10-02)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.4...react-dworak-1.2.5) (2025-10-03)
+
+
+### Bug Fixes
+
+* red circle ([bbf9cb4](https://github.com/dworak-dev/react-dworak/commit/bbf9cb46064277c2d530cee419aed2d0331ce9df))
+
 ## [1.2.4](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.3...react-dworak-1.2.4) (2025-10-03)
 
 
