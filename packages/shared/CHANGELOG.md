@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/dworak-dev/react-dworak/compare/shared-1.1.2...shared-1.1.3) (2025-10-03)
+
+
+### Bug Fixes
+
+* moved sentry source map deployment from docker to workflow ([f7425ef](https://github.com/dworak-dev/react-dworak/commit/f7425efc1721170bc3a6ee7a2eb20ced6b546de2))
+
 ## [1.1.2](https://github.com/dworak-dev/react-dworak/compare/shared-1.1.1...shared-1.1.2) (2025-10-02)
 
 
