@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/dworak-dev/react-dworak/compare/default-app-1.2.2...default-app-1.2.3) (2025-10-03)
+
+
+### Bug Fixes
+
+* reworked dockerfile ([1bee2cc](https://github.com/dworak-dev/react-dworak/commit/1bee2ccfc9e94e78c99150b80ffe1e3cb52a37fc))
+
 ## [1.2.2](https://github.com/dworak-dev/react-dworak/compare/default-app-1.2.1...default-app-1.2.2) (2025-10-03)
 
 
