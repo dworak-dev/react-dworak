@@ -1,6 +1,6 @@
 {
   "name": "@packages/assets",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "devDependencies": {
     "@packages/eslint": "1.0.1",
     "@packages/typescript": "1.1.0"
