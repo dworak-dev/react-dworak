@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.4](https://github.com/dworak-dev/react-dworak/compare/default-app-1.1.3...default-app-1.1.4) (2025-10-03)
+
+
+### Bug Fixes
+
+* moved sentry source map deployment from docker to workflow ([f7425ef](https://github.com/dworak-dev/react-dworak/commit/f7425efc1721170bc3a6ee7a2eb20ced6b546de2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @packages/shared bumped from 1.1.2 to 1.1.3
+
 ## [1.1.3](https://github.com/dworak-dev/react-dworak/compare/default-app-1.1.2...default-app-1.1.3) (2025-10-02)
 
 
