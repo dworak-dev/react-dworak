@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.0...react-dworak-1.2.1) (2025-10-03)
+
+
+### Bug Fixes
+
+* added build id to next js ([2c51bdd](https://github.com/dworak-dev/react-dworak/commit/2c51bdd8fed9918f49a99d97d9bb5996457f0636))
+
 ## [1.2.0](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.1.5...react-dworak-1.2.0) (2025-10-03)
 
 

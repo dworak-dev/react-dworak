@@ -1,6 +1,6 @@
 {
   "name": "default-app",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "dependencies": {
     "@packages/assets": "1.1.1",
     "@packages/graphql": "1.1.0",
