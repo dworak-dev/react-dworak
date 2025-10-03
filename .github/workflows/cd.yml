@@ -105,7 +105,7 @@ jobs:
 
   promote-to-prod:
     if: contains(github.event.release.name, 'default-app')
-    needs: default-app-build-and-push-staging
+    needs: [prepare, default-app-build-and-push-staging]
     environment: production
     runs-on: ubuntu-latest
 
