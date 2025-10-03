@@ -1,16 +1,10 @@
 FROM node:22-alpine AS base
 
-ARG SENTRY_ORG
-ARG SENTRY_PROJECT
-ARG SENTRY_RELEASE
-ARG SENTRY_DIST
-ARG SENTRY_ENV
-ENV SENTRY_ENV=${SENTRY_ENV}
-ENV NEXT_PUBLIC_SENTRY_ENV=${SENTRY_ENV}
 
 FROM base AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
+
 # Set working directory
 WORKDIR /app
 # Replace <your-major-version> with the major version installed in your repository. For example:
@@ -23,14 +17,6 @@ RUN turbo prune default-app --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
-# re-declare args in this stage (Docker requires this)
-ARG SENTRY_ORG
-ARG SENTRY_PROJECT
-ARG SENTRY_RELEASE
-ARG SENTRY_DIST
-ARG SENTRY_ENV
-ENV SENTRY_ENV=${SENTRY_ENV}
-ENV NEXT_PUBLIC_SENTRY_ENV=${SENTRY_ENV}
 
 RUN apk update
 RUN apk add --no-cache libc6-compat
@@ -46,19 +32,15 @@ COPY --from=builder /app/out/full/ .
 # install sentry cli globally with yarn:
 RUN yarn global add @sentry/cli
 
-RUN echo "SENTRY_ENV: $SENTRY_ENV"
+# Sentry environment variables needed in build time for deploying releases and uploading source maps
+ARG SENTRY_ORG
+ARG SENTRY_PROJECT
+ARG SENTRY_RELEASE
 
 # RUN yarn turbo run build
 RUN --mount=type=secret,id=sentry_auth_token \
   export SENTRY_AUTH_TOKEN=$(cat /run/secrets/sentry_auth_token) && \
-  SENTRY_AUTH_TOKEN="$(cat /run/secrets/sentry_auth_token)" \
-  SENTRY_ORG="$SENTRY_ORG" \
-  SENTRY_PROJECT="$SENTRY_PROJECT" \
-  SENTRY_RELEASE="$SENTRY_RELEASE" \
-  SENTRY_ENV="$SENTRY_ENV" \
-  SENTRY_DIST="$SENTRY_DIST" \
-  yarn turbo run build && \
-  sentry-cli releases deploys "$SENTRY_RELEASE-$SENTRY_DIST" new -e "$SENTRY_ENV"
+  yarn turbo run build
 
 FROM base AS runner
 WORKDIR /app

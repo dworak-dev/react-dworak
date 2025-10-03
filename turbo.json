@@ -50,8 +50,6 @@
     "SENTRY_AUTH_TOKEN",
     "SENTRY_ORG",
     "SENTRY_PROJECT",
-    "SENTRY_RELEASE",
-    "SENTRY_DIST",
-    "SENTRY_ENV"
+    "SENTRY_RELEASE"
   ]
 }

@@ -6,12 +6,8 @@
 import { publicVars } from "@packages/shared/public-vars";
 import * as Sentry from "@sentry/nextjs";
 
-const sentryEnv =
-  process.env.NEXT_PUBLIC_SENTRY_ENV ?? process.env.SENTRY_ENV ?? "local";
-
 Sentry.init({
   dsn: publicVars.SENTRY_DSN,
-  environment: sentryEnv,
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,

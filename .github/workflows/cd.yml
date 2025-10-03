@@ -4,32 +4,60 @@ on:
   release:
     types: [published]
 
+env: # global, simple stuff
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  TAG: ${{ github.ref_type == 'tag' && github.ref_name || github.event.release.tag_name || github.sha }}
+
+  ACR_LOGIN_SERVER: ${{ vars.ACR_LOGIN_SERVER }}
+  ACR_NAME: ${{ vars.ACR_NAME }}
+
+  DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
+  DOCKER_IMAGE_TAG: ${{ vars.DOCKER_IMAGE_TAG }}
+
+  SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+  SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs: # expose step outputs as job outputs
+      raw_tag: ${{ steps.calc.outputs.raw_tag }}
+      name: ${{ steps.calc.outputs.name }}
+      version: ${{ steps.calc.outputs.version }}
+      short_sha: ${{ steps.calc.outputs.short_sha }}
+    steps:
+      - id: calc
+        shell: bash
+        run: |
+          RAW_TAG="${TAG}"
+          NAME="${RAW_TAG%-*}"               # before last '-'
+          VERSION="${RAW_TAG##*-}"           # after last '-'
+          VERSION="${VERSION#v}"             # drop leading 'v'
+          SHORT_SHA="${GITHUB_SHA::7}"
+
+          {
+            echo "raw_tag=$RAW_TAG"
+            echo "name=$NAME"
+            echo "version=$VERSION"
+            echo "short_sha=$SHORT_SHA"
+          } >> "$GITHUB_OUTPUT"
+
   default-app-build-and-push-staging:
     if: contains(github.event.release.name, 'default-app')
+    needs: prepare
     environment: staging
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write # required for Azure OIDC login
 
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      TAG: ${{ github.ref_type == 'tag' && github.ref_name || github.event.release.tag_name || github.sha }}
+    env: # make them envs in this job
+      RAW_TAG: ${{ needs.prepare.outputs.raw_tag }}
+      NAME: ${{ needs.prepare.outputs.name }}
+      VERSION: ${{ needs.prepare.outputs.version }}
+      SHORT_SHA: ${{ needs.prepare.outputs.short_sha }}
 
     steps:
-      - name: Extract name and version
-        shell: bash
-        run: |
-          RAW_TAG="$TAG"
-          NAME="${RAW_TAG%-*}"        # strip after last '-'
-          VERSION="${RAW_TAG##*-}"    # take text after last '-'
-          VERSION="${VERSION#v}" 
-          SHORT_SHA="${GITHUB_SHA::7}"
-          echo "NAME=$NAME" >> $GITHUB_ENV
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -39,9 +67,8 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Log in to ACR
-        run: az acr login --name "${{ vars.ACR_NAME }}"
+        run: az acr login --name "$ACR_NAME"
 
-      # TODO: also tag with git hash
       - name: Build and Push
         run: |
           docker buildx build \
@@ -50,10 +77,8 @@ jobs:
             --tag "${{vars.ACR_LOGIN_SERVER}}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}" \
             --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${SHORT_SHA}" \
             --push \
-            --build-arg SENTRY_ORG="${{ vars.SENTRY_ORG }}" \
-            --build-arg SENTRY_PROJECT="${{ vars.SENTRY_PROJECT }}" \
-            --build-arg SENTRY_RELEASE="$NAME" \
-            --build-arg SENTRY_DIST="$VERSION" \
-            --build-arg SENTRY_ENV="staging" \
+            --build-arg SENTRY_ORG="$SENTRY_ORG" \
+            --build-arg SENTRY_PROJECT="$SENTRY_PROJECT" \
+            --build-arg SENTRY_RELEASE="$RAW_TAG" \
             --secret id=sentry_auth_token,env=SENTRY_AUTH_TOKEN \
             .

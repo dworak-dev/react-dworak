@@ -33,15 +33,12 @@ const withSentryNextConfig = withSentryConfig(nextConfig, {
   release: {
     create: true,
     finalize: true,
-    name: `${privateVars.SENTRY_RELEASE}-${privateVars.SENTRY_DIST}`,
-    dist: privateVars.SENTRY_DIST,
+    name: privateVars.SENTRY_RELEASE,
   },
   project: privateVars.SENTRY_PROJECT,
 
   sourcemaps: {
-    disable: false, // Source maps are enabled by default
-    ignore: ["**/node_modules/**"], // Files to exclude
-    deleteSourcemapsAfterUpload: true, // Security: delete after upload
+    deleteSourcemapsAfterUpload: true,
   },
 
   silent: false,

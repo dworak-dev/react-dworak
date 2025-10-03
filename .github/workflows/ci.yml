@@ -57,3 +57,13 @@ jobs:
       # --- build (uses Turborepo) ---
       - name: Build
         run: yarn build
+
+      - name: Upload source maps to Sentry
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: your-org
+          SENTRY_PROJECT: react-dworak
+        run: |
+          npx --package @sentry/cli sentry-cli releases new $GITHUB_SHA
+          npx --package @sentry/cli sentry-cli releases files $GITHUB_SHA upload-sourcemaps apps/default-app/.next --url-prefix '~/'
+          npx --package @sentry/cli sentry-cli releases finalize $GITHUB_SHA

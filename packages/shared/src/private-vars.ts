@@ -10,8 +10,4 @@ export const privateVars = {
   SENTRY_ORG: process.env.SENTRY_ORG,
   SENTRY_PROJECT: process.env.SENTRY_PROJECT,
   SENTRY_RELEASE: process.env.SENTRY_RELEASE,
-  SENTRY_DIST: process.env.SENTRY_DIST,
-  SENTRY_ENV: process.env.SENTRY_ENV ?? "local",
 };
-
-console.log("debugging: ", privateVars);
