@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.9](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.8...react-dworak-1.2.9) (2025-10-03)
+
+
+### Bug Fixes
+
+* needs prepare ([0b69aa0](https://github.com/dworak-dev/react-dworak/commit/0b69aa0a78685fe30cca03e23bced2eeabaa9998))
+
 ## [1.2.8](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.7...react-dworak-1.2.8) (2025-10-03)
 
 
