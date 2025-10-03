@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.1.4...react-dworak-1.1.5) (2025-10-03)
+
+
+### Bug Fixes
+
+* pushing version ([bbae03b](https://github.com/dworak-dev/react-dworak/commit/bbae03bf155bfd77f33a0699a2116451252a0326))
+
 ## [1.1.4](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.1.3...react-dworak-1.1.4) (2025-10-03)
 
 
