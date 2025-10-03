@@ -1,6 +1,6 @@
 {
   "name": "react-dworak",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "devDependencies": {
     "depcheck": "^1.4.7",
     "prettier": "3.6.2",
