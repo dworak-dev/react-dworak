@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
 
     return mappedRoutes;
   },
+  generateBuildId: async () => privateVars.SENTRY_RELEASE ?? "unspecified",
 };
 
 const withSentryNextConfig = withSentryConfig(nextConfig, {
