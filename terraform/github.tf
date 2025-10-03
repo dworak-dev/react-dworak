@@ -30,7 +30,7 @@ resource "github_repository_environment" "repo_environment" {
 # Set repository environment varible for each env with the docker image name
 resource "github_actions_variable" "docker_image" {
   repository    = data.github_repository.repo.name
-  variable_name = "DOCKER_IMAGE_NAME"
+  variable_name = "DOCKER_DEFAULT_APP_IMAGE_NAME"
   value         = var.default_app_name
 }
 
@@ -39,7 +39,7 @@ resource "github_actions_environment_variable" "docker_image" {
   for_each      = local.envs
   repository    = data.github_repository.repo.name
   environment   = github_repository_environment.repo_environment[each.key].environment
-  variable_name = "DOCKER_IMAGE_TAG"
+  variable_name = "DOCKER_IMAGE_ENV_TAG"
   value         = each.key
 }
 
