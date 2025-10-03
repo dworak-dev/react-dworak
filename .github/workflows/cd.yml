@@ -3,53 +3,53 @@ name: cd
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 env:
-  TAG: ${{ github.ref_type == 'tag' && github.ref_name || github.event.release.tag_name || github.sha }}
-
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
   SENTRY_ORG: ${{ vars.SENTRY_ORG }}
   SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
 
 jobs:
   prepare:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.release.name, 'default-app')
     runs-on: ubuntu-latest
     outputs: # expose step outputs as job outputs
-      raw_tag: ${{ steps.calc.outputs.raw_tag }}
-      name: ${{ steps.calc.outputs.name }}
       version: ${{ steps.calc.outputs.version }}
       short_sha: ${{ steps.calc.outputs.short_sha }}
     steps:
-      - id: calc
-        shell: bash
+      - name: version-tag
+        if: github.event_name != 'workflow_dispatch'
         run: |
-          RAW_TAG="${TAG}"
-          NAME="${RAW_TAG%-*}"               # before last '-'
-          VERSION="${RAW_TAG##*-}"           # after last '-'
+          VERSION="${TAG##*-}"           # after last '-'
           VERSION="${VERSION#v}"             # drop leading 'v'
-          SHORT_SHA="${GITHUB_SHA::7}"
           {
-            echo "raw_tag=$RAW_TAG"
-            echo "name=$NAME"
             echo "version=$VERSION"
-            echo "short_sha=$SHORT_SHA"
           } >> "$GITHUB_OUTPUT"
 
-  default-app-build-and-push-staging:
-    if: contains(github.event.release.name, 'default-app')
+      - name: version-workflow-dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "version=branch-${{ github.ref_name }}-sha-${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: short-sha
+        run: echo "short_sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Show values
+        run: |
+          echo "Version: ${{ steps.calc.outputs.version }}"
+          echo "Short SHA: ${{ steps.calc.outputs.short_sha }}"
+
+  build:
     needs: prepare
-    environment: staging
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write # required for Azure OIDC login
 
     env: # make them envs in this job
-      RAW_TAG: ${{ needs.prepare.outputs.raw_tag }}
-      NAME: ${{ needs.prepare.outputs.name }}
       VERSION: ${{ needs.prepare.outputs.version }}
       SHORT_SHA: ${{ needs.prepare.outputs.short_sha }}
-      SENTRY_RELEASE: ${{ needs.prepare.outputs.raw_tag }}
+      SENTRY_RELEASE: ${{ needs.prepare.outputs.version }}
 
     steps:
       - name: checkout-repository
@@ -93,8 +93,7 @@ jobs:
           docker buildx build \
             --file apps/default-app/Dockerfile \
             --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$VERSION" \
-            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}" \
-            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$SHORT_SHA" \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:sha-$SHORT_SHA" \
             --push \
             .
 
@@ -103,29 +102,20 @@ jobs:
         with:
           environment: staging
 
+  promote-to-staging:
+    if: contains(github.event.release.name, 'default-app')
+    needs: [prepare, build]
+    uses: ./.github/workflows/promote.yml
+    with:
+      environment: staging
+      source_tag: ${{ needs.prepare.outputs.version }}
+    secrets: inherit
+
   promote-to-prod:
     if: contains(github.event.release.name, 'default-app')
-    needs: [prepare, default-app-build-and-push-staging]
-    environment: production
-    runs-on: ubuntu-latest
-
-    env:
-      VERSION: ${{ needs.prepare.outputs.version }}
-      SHORT_SHA: ${{ needs.prepare.outputs.short_sha }}
-
-    steps:
-      - name: azure-login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: acr-login
-        run: az acr login --name "${{ vars.ACR_NAME }}"
-
-      - name: retag-and-push
-        run: |
-          skopeo copy \
-            --src-tls-verify=false \
-            --dest-tls-verify=false \
-            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$VERSION" \
-            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:prod"
+    needs: [prepare, promote-to-staging]
+    uses: ./.github/workflows/promote.yml
+    with:
+      environment: prod
+      source_tag: ${{ needs.prepare.outputs.version }}
+    secrets: inherit
