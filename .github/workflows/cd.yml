@@ -102,3 +102,71 @@ jobs:
         uses: getsentry/action-release@v1
         with:
           environment: staging
+
+  default-app-build-and-push-prod:
+    if: contains(github.event.release.name, 'default-app')
+    needs: prepare
+    environment: prod
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for Azure OIDC login
+
+    env: # make them envs in this job
+      RAW_TAG: ${{ needs.prepare.outputs.raw_tag }}
+      NAME: ${{ needs.prepare.outputs.name }}
+      VERSION: ${{ needs.prepare.outputs.version }}
+      SHORT_SHA: ${{ needs.prepare.outputs.short_sha }}
+      SENTRY_RELEASE: ${{ needs.prepare.outputs.raw_tag }}
+
+    steps:
+      - name: checkout-repository
+        uses: actions/checkout@v4
+
+      - name: azure-login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: acr-login
+        run: az acr login --name "${{ vars.ACR_NAME }}"
+
+      - name: install-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          check-latest: true
+          cache: "yarn"
+
+      - name: install-yarn
+        # Install the same version as the main package.json
+        run: npm i -g yarn@1.22.22
+
+      - name: restore-turbo-cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/yarn.lock', 'turbo.json', '**/tsconfig.json') }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: install-dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: build
+        run: yarn build
+
+      - name: Build and Push
+        run: |
+          docker buildx build \
+            --file apps/default-app/Dockerfile \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$VERSION" \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}" \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$SHORT_SHA" \
+            --push \
+            .
+
+      - name: sentry-deployment
+        uses: getsentry/action-release@v1
+        with:
+          environment: prod
