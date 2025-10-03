@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.8](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.7...react-dworak-1.2.8) (2025-10-03)
+
+
+### Bug Fixes
+
+* promote docker image without pulling ([dbd4565](https://github.com/dworak-dev/react-dworak/commit/dbd45655dd7b42edd5235234e016c8444bff819f))
+
 ## [1.2.7](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.6...react-dworak-1.2.7) (2025-10-03)
 
 

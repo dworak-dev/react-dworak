@@ -1,8 +1,8 @@
 {
   "name": "default-app",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "dependencies": {
-    "@packages/assets": "1.1.4",
+    "@packages/assets": "1.1.5",
     "@packages/graphql": "1.1.0",
     "@packages/shared": "1.1.3",
     "@packages/ui": "1.1.0",
