@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.10](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.9...react-dworak-1.2.10) (2025-10-03)
+
+
+### Bug Fixes
+
+* red circle ([e3466d2](https://github.com/dworak-dev/react-dworak/commit/e3466d235822ecd6fdc77a1abb364f7e2c644caa))
+
 ## [1.2.9](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.8...react-dworak-1.2.9) (2025-10-03)
 
 
