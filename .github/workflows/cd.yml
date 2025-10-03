@@ -69,6 +69,37 @@ jobs:
       - name: Log in to ACR
         run: az acr login --name "$ACR_NAME"
 
+      - name: Setup Node.js (v22) with Yarn cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          check-latest: true
+          cache: "yarn"
+
+      # Ensure the exact Yarn version declared in package.json
+      - name: Install Yarn 1.x
+        run: npm i -g yarn@1.22.22
+
+      - name: Restore Turbo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/yarn.lock', 'turbo.json', '**/tsconfig.json') }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # --- build (uses Turborepo) ---
+      - name: Build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          SENTRY_RELEASE: $RAW_TAG
+        run: yarn build
+
       - name: Build and Push
         run: |
           docker buildx build \

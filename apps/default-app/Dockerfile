@@ -33,14 +33,14 @@ COPY --from=builder /app/out/full/ .
 RUN yarn global add @sentry/cli
 
 # Sentry environment variables needed in build time for deploying releases and uploading source maps
-ARG SENTRY_ORG
-ARG SENTRY_PROJECT
-ARG SENTRY_RELEASE
+# ARG SENTRY_ORG
+# ARG SENTRY_PROJECT
+# ARG SENTRY_RELEASE
 
-# RUN yarn turbo run build
-RUN --mount=type=secret,id=sentry_auth_token \
-  export SENTRY_AUTH_TOKEN=$(cat /run/secrets/sentry_auth_token) && \
-  yarn turbo run build
+RUN yarn turbo run build
+# RUN --mount=type=secret,id=sentry_auth_token \
+#   export SENTRY_AUTH_TOKEN=$(cat /run/secrets/sentry_auth_token) && \
+#   yarn turbo run build
 
 FROM base AS runner
 WORKDIR /app
