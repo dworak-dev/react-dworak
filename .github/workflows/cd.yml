@@ -97,7 +97,7 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
-          SENTRY_RELEASE: $RAW_TAG
+          SENTRY_RELEASE: ${{ needs.prepare.outputs.raw_tag }}
         run: yarn build
 
       - name: Build and Push
