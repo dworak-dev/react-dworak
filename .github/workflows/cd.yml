@@ -5,11 +5,6 @@ on:
     types: [published]
   workflow_dispatch:
 
-env:
-  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-  SENTRY_ORG: ${{ vars.SENTRY_ORG }}
-  SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
-
 jobs:
   prepare:
     if: >
@@ -17,10 +12,11 @@ jobs:
       (github.event_name == 'release' && contains(github.event.release.name, 'default-app'))
     runs-on: ubuntu-latest
     outputs: # expose step outputs as job outputs
-      version: ${{ steps.calc.outputs.version }}
+      semver: ${{ steps.calc.outputs.semver }}
       short_sha: ${{ steps.calc.outputs.short_sha }}
+      tag: ${{ github.event.release.tag_name || github.event.release.name || '' }}
     steps:
-      - name: Calculate version and SHA
+      - name: calculate-variables
         id: calc
         shell: bash
         env:
@@ -28,100 +24,54 @@ jobs:
           # For non-release events this will be empty, which is fine.
           TAG: ${{ github.event.release.tag_name || github.event.release.name || '' }}
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="branch-${{ github.ref_name }}-sha-${GITHUB_SHA::7}"
-          else
-            # If it's a release, derive version from TAG or ref_name
+          if [[ "${{ github.event_name }}" != "workflow_dispatch" ]]; then
+            # If it's a release, derive semver from TAG or ref_name
             RAW_TAG="${TAG:-${{ github.ref_name }}}"
-            VERSION="${RAW_TAG##*-}"  # after last '-'
-            VERSION="${VERSION#v}"    # drop leading 'v'
+            SEMVER="${RAW_TAG##*-}"  # after last '-'
+            SEMVER="${SEMVER#v}"    # drop leading 'v'
           fi
 
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "semver=$SEMVER" >> "$GITHUB_OUTPUT"
           echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
       - name: Show values
         run: |
-          echo "Version: ${{ steps.calc.outputs.version }}"
+          echo "Semver: ${{ steps.calc.outputs.semver }}"
           echo "Short SHA: ${{ steps.calc.outputs.short_sha }}"
 
-  build:
-    needs: prepare
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write # required for Azure OIDC login
+  build-and-push-default-app:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'release' && contains(github.event.release.name, 'default-app'))
+    needs: [prepare]
+    uses: ./.github/workflows/build-and-push.yml
+    with:
+      dockerfile_path: apps/default-app/Dockerfile
+      image_name: ${{ vars.DOCKER_DEFAULT_APP_IMAGE_NAME }}
+      semver: ${{ needs.prepare.outputs.semver }}
+      short_sha: ${{ needs.prepare.outputs.short_sha }}
+    secrets: inherit
 
-    env: # make them envs in this job
-      VERSION: ${{ needs.prepare.outputs.version }}
-      SHORT_SHA: ${{ needs.prepare.outputs.short_sha }}
-      SENTRY_RELEASE: ${{ needs.prepare.outputs.version }}
-
-    steps:
-      - name: checkout-repository
-        uses: actions/checkout@v4
-
-      - name: azure-login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: acr-login
-        run: az acr login --name "${{ vars.ACR_NAME }}"
-
-      - name: install-node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22.x"
-          check-latest: true
-          cache: "yarn"
-
-      - name: install-yarn
-        # Install the same version as the main package.json
-        run: npm i -g yarn@1.22.22
-
-      - name: restore-turbo-cache
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/yarn.lock', 'turbo.json', '**/tsconfig.json') }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
-
-      - name: install-dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: build
-        run: yarn build
-
-      - name: Build and Push
-        run: |
-          docker buildx build \
-            --file apps/default-app/Dockerfile \
-            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:$VERSION" \
-            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:sha-$SHORT_SHA" \
-            --push \
-            .
-
-      - name: sentry-deployment
-        uses: getsentry/action-release@v1
-        with:
-          environment: staging
-
-  promote-to-staging:
-    if: contains(github.event.release.name, 'default-app')
-    needs: [prepare, build]
+  promote-to-staging-default-app:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'release' && contains(github.event.release.name, 'default-app'))
+    needs: [prepare, build-and-push-default-app]
     uses: ./.github/workflows/promote.yml
     with:
       environment: staging
-      source_tag: ${{ needs.prepare.outputs.version }}
+      image_name: ${{ vars.DOCKER_DEFAULT_APP_IMAGE_NAME }}
+      short_sha: ${{ needs.prepare.outputs.short_sha }}
     secrets: inherit
 
-  promote-to-prod:
-    if: contains(github.event.release.name, 'default-app')
-    needs: [prepare, promote-to-staging]
+  promote-to-prod-default-app:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'release' && contains(github.event.release.name, 'default-app'))
+    needs: [prepare, promote-to-staging-default-app]
     uses: ./.github/workflows/promote.yml
     with:
       environment: prod
-      source_tag: ${{ needs.prepare.outputs.version }}
+      image_name: ${{ vars.DOCKER_DEFAULT_APP_IMAGE_NAME }}
+      short_sha: ${{ needs.prepare.outputs.short_sha }}
     secrets: inherit

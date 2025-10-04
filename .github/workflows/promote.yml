@@ -3,25 +3,37 @@ name: promote-image
 on:
   workflow_call:
     inputs:
-      source_tag:
-        description: "Tag to promote from (e.g. 1.2.3)"
-        type: string
-        required: true
       environment:
         description: "GitHub environment to target"
+        type: string
+        required: true
+      image_name:
+        description: "Image name"
+        type: string
+        required: true
+      short_sha:
+        description: "Short SHA (e.g. abc1234)"
         type: string
         required: true
     secrets:
       AZURE_CREDENTIALS:
         required: true
       SENTRY_AUTH_TOKEN:
-        required: false
+        required: true
 
 jobs:
   promote:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+      SENTRY_RELEASE: ${{ inputs.semver && format('default-app-{0}', inputs.semver) || format('default-app-{0}', inputs.short_sha) }}
     steps:
+      - name: checkout-repository
+        uses: actions/checkout@v4
+
       - name: login-azure
         uses: azure/login@v2
         with:
@@ -35,8 +47,8 @@ jobs:
           skopeo copy \
             --src-tls-verify=false \
             --dest-tls-verify=false \
-            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ inputs.source_tag }}" \
-            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ vars.DOCKER_IMAGE_TAG }}"
+            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}:${{ inputs.short_sha }}" \
+            docker://"${{ vars.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}:${{ vars.DOCKER_IMAGE_ENV_TAG }}"
 
       - name: sentry-deployment
         uses: getsentry/action-release@v1

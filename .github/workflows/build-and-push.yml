@@ -1,0 +1,85 @@
+name: build-and-push-app
+
+on:
+  workflow_call:
+    inputs:
+      dockerfile_path:
+        description: "Dockerfile path"
+        type: string
+        required: true
+      image_name:
+        description: "Image name"
+        type: string
+        required: true
+      semver:
+        description: "Semantic version (e.g. 1.2.3)"
+        type: string
+        required: false
+      short_sha:
+        description: "Short SHA (e.g. abc1234)"
+        type: string
+        required: true
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      SENTRY_AUTH_TOKEN:
+        required: true
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+      SENTRY_RELEASE: ${{ inputs.semver && format('default-app-{0}', inputs.semver) || format('default-app-{0}', inputs.short_sha) }}
+    steps:
+      - name: checkout-repository
+        uses: actions/checkout@v4
+
+      - name: login-azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: login-acr
+        run: az acr login --name "${{ vars.ACR_NAME }}"
+
+      - name: install-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          check-latest: true
+          cache: "yarn"
+
+      - name: install-yarn
+        # Install the same version as the main package.json
+        run: npm i -g yarn@1.22.22
+
+      - name: restore-turbo-cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/yarn.lock', 'turbo.json', '**/tsconfig.json') }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: install-dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: build
+        run: yarn build
+
+      - name: docker-build-and-push
+        run: |
+          docker buildx build \
+            --file "${{ inputs.dockerfile_path }}" \
+            --tag "${{ vars.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}:${{ inputs.short_sha }}" \
+            --push \
+            .
+
+      - name: docker-tag-and-push-semver
+        if: ${{ inputs.semver != '' }}
+        run: |
+          docker tag "${{ vars.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}:${{ inputs.short_sha }}" "${{ vars.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}:${{ inputs.semver }}"
+          docker push "${{ vars.ACR_LOGIN_SERVER }}/${{ inputs.image_name }}:${{ inputs.semver }}"
