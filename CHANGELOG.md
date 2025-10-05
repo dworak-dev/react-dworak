@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.13](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.12...react-dworak-1.2.13) (2025-10-05)
+
+
+### Bug Fixes
+
+* deployment ([#22](https://github.com/dworak-dev/react-dworak/issues/22)) ([2d9e959](https://github.com/dworak-dev/react-dworak/commit/2d9e95993281fb8790a579bbe423ac0a8ee751d0))
+* red color ([aae0b77](https://github.com/dworak-dev/react-dworak/commit/aae0b77c9fc9e6ba4ddc7e23f31c3d0ee8497c51))
+
 ## [1.2.12](https://github.com/dworak-dev/react-dworak/compare/react-dworak-1.2.11...react-dworak-1.2.12) (2025-10-03)
 
 

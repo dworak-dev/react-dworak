@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.11](https://github.com/dworak-dev/react-dworak/compare/default-app-1.2.10...default-app-1.2.11) (2025-10-05)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @packages/assets bumped from 1.1.8 to 1.1.9
+
 ## [1.2.10](https://github.com/dworak-dev/react-dworak/compare/default-app-1.2.9...default-app-1.2.10) (2025-10-03)
 
 
